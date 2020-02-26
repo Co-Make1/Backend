@@ -13,7 +13,7 @@ exports.up = async function(knex) {
     users.string("first_name");
     users.string("last_name");
     users
-      .string("location")
+      .integer("location")
       .notNullable()
       .unique();
   });
