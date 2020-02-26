@@ -1,5 +1,6 @@
 exports.seed = async function(knex) {
-  await knex("issues").del();
+  await knex("issues").dropForeign();
+  await knex("issues").truncate();
   await knex("issues").insert([
     {
       id: 1,

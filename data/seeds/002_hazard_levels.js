@@ -1,6 +1,6 @@
 exports.seed = async function(knex) {
-  // Deletes ALL existing entries
-  await knex("hazard_levels").del();
+  await knex("hazard_levels").dropForeign();
+  await knex("hazard_levels").truncate();
   await knex("hazard_levels").insert([
     {
       id: 1,
