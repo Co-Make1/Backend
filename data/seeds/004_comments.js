@@ -4,17 +4,20 @@ exports.seed = async function(knex) {
     {
       id: 1,
       comment: "I'm the first comment.",
-      issue_id: 1
+      issue_id: 1,
+      user_id: 1
     },
     {
       id: 2,
       comment: "I'm the second comment.",
-      issue_id: 1
+      issue_id: 1,
+      user_id: 1
     },
     {
       id: 3,
       comment: "I'm the third comment.",
-      issue_id: 1
+      issue_id: 1,
+      user_id: 1
     }
   ]);
 };

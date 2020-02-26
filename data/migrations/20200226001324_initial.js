@@ -58,6 +58,14 @@ exports.up = async function(knex) {
       .inTable("issues")
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
+    comments
+      .integer("user_id")
+      .notNullable()
+      .unsigned()
+      .references("id")
+      .inTable("users")
+      .onUpdate("CASCADE")
+      .onDelete("CASCADE");
     comments.timestamp("created_at").defaultTo(knex.fn.now());
   });
   //   await knex.schema.createTable("issue_comment", i_c => {
