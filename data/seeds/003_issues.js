@@ -1,6 +1,6 @@
 exports.seed = async function(knex) {
-  await knex("issues").del();
-  await knex.raw("ALTER SEQUENCE issues_id_seq RESTART WITH 3");
+  // await knex("issues");
+  await knex.raw("TRUNCATE TABLE issues CASCADE");
   await knex("issues").insert([
     {
       id: 1,
