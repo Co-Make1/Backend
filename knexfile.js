@@ -29,19 +29,18 @@ module.exports = {
   },
 
   production: {
-    client: "sqlite3",
+    client: "pg",
+    useNullAsDefault: true,
     connection: {
       database: "comake",
       user: "username",
       password: "password"
     },
-    pool: {
-      min: 2,
-      max: 10
-    },
     migrations: {
+      directory: "./data/migrations",
       tableName: "knex_migrations"
-    }
+    },
+    seeds: { directory: "./data/seeds" }
   },
   testing: {
     client: "sqlite3",
