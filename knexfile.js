@@ -31,7 +31,7 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "my_db",
+      database: "./data/comake.db3",
       user: "username",
       password: "password"
     },
