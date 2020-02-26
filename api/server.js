@@ -3,7 +3,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const cors = require("cors");
 
-const server = express.Router();
+const server = express();
 
 server.use(express.json());
 server.use(morgan("dev"));
