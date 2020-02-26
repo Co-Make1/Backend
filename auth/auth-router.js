@@ -26,7 +26,9 @@ router.post(
   validator("username"),
   validator("password"),
   validator("email"),
-  validator("location"),
+  validator("city"),
+  validator("state"),
+  validator("zip_code"),
 
   async (req, res, next) => {
     try {
