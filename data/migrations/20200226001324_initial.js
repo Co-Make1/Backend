@@ -20,12 +20,6 @@ exports.up = async function(knex) {
   users.boolean("is_admin").defaultTo(false);
   users.timestamp("created_at").defaultTo(knex.fn.now());
 
-  await knex.schema.createTable("comments", comments => {
-    comments.increments();
-    comments.string("comment").notNullable();
-    comments.timestamp("created_at").defaultTo(knex.fn.now());
-  });
-
   await knex.schema.createTable("hazard_levels", hazards => {
     hazards.increments();
     hazards.string("hazard_level");
@@ -36,7 +30,7 @@ exports.up = async function(knex) {
     issues.string("issue").notNullable();
     issues.string("issue_description").notNullable();
     issues.string("photo").unique();
-    issues.string("location").notNullable();
+    issues.integer("location").notNullable();
     issues.integer("upvotes");
     issues
       .integer("user_id")
@@ -55,15 +49,20 @@ exports.up = async function(knex) {
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
     issues.timestamp("created_at").defaultTo(knex.fn.now());
-    issues
-      .integer("comment_id")
+  });
+  await knex.schema.createTable("comments", comments => {
+    comments.increments();
+    comments.string("comment").notNullable();
+    comments
+      .integer("issue_id")
+      .notNullable()
       .unsigned()
       .references("id")
-      .inTable("comments")
+      .inTable("issues")
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
+    comments.timestamp("created_at").defaultTo(knex.fn.now());
   });
-
   await knex.schema.createTable("issue_comment", i_c => {
     i_c
       .integer("user_id")
@@ -94,8 +93,8 @@ exports.up = async function(knex) {
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("issue_comment");
+  await knex.schema.dropTableIfExists("comments");
   await knex.schema.dropTableIfExists("issues");
   await knex.schema.dropTableIfExists("hazard_levels");
-  await knex.schema.dropTableIfExists("comments");
   await knex.schema.dropTableIfExists("users");
 };
