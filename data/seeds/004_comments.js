@@ -1,6 +1,5 @@
 exports.seed = async function(knex) {
-  // await knex("comments");
-  await knex.raw("TRUNCATE TABLE comments CASCADE");
+  await knex("comments").truncate();
   await knex("comments").insert([
     {
       id: 1,
