@@ -1,5 +1,4 @@
 exports.seed = async function(knex) {
-  // Deletes ALL existing entries
   await knex("comments").truncate();
   await knex("comments").insert([
     {

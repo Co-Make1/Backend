@@ -28,6 +28,7 @@ exports.up = async function(knex) {
 
   await knex.schema.createTable("hazard_levels", hazards => {
     hazards.increments();
+    hazards.string("hazard_level");
   });
 
   await knex.schema.createTable("issues", issues => {
