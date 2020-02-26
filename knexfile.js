@@ -5,7 +5,7 @@ module.exports = {
     client: "sqlite3",
     useNullAsDefault: true,
     connection: {
-      filename: "./data/comake.db3"
+      filename: Path2D.resolve(__dirname, "./data/comake.db3")
     },
     migrations: {
       directory: "./data/migrations"
