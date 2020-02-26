@@ -15,7 +15,7 @@ module.exports = {
   staging: {
     client: "postgresql",
     connection: {
-      database: "./data/comake.db3",
+      database: "my_db",
       user: "username",
       password: "password"
     },
@@ -31,7 +31,7 @@ module.exports = {
   production: {
     client: "postgresql",
     connection: {
-      database: "./data/comake.db3",
+      database: "my_db",
       user: "username",
       password: "password"
     },
