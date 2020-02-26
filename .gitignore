@@ -108,3 +108,4 @@ dist
 .vscode-test
 
 # DB
+*db3
