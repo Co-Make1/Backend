@@ -15,7 +15,7 @@ exports.seed = async function(knex) {
       is_admin: false
     },
     {
-      id: 1,
+      id: 2,
       username: "testAdmin",
       password: bcrypt.hashSync("password", 10),
       email: "testAdmin@email.com",
