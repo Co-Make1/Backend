@@ -1,4 +1,4 @@
-exports.down = async function(knex) {
+exports.seed = async function(knex) {
   await knex.schema.dropTableIfExists("issue_comment");
   await knex.schema.dropTableIfExists("issues");
   await knex.schema.dropTableIfExists("hazard_levels");

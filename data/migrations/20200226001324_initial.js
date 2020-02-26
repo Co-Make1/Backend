@@ -2,7 +2,7 @@ exports.up = async function(knex) {
   await knex.schema.createTable("users", users => {
     users.increments();
     users
-      .string("user_name", 128)
+      .string("username", 128)
       .notNullable()
       .unique();
     users.string("password").notNullable();
@@ -12,13 +12,10 @@ exports.up = async function(knex) {
       .unique();
     users.string("first_name");
     users.string("last_name");
-    users
-      .integer("location")
-      .notNullable()
-      .unique();
+    users.integer("location").notNullable();
+    users.boolean("is_admin").defaultTo(false);
+    users.timestamp("created_at").defaultTo(knex.fn.now());
   });
-  users.boolean("is_admin").defaultTo(false);
-  users.timestamp("created_at").defaultTo(knex.fn.now());
 
   await knex.schema.createTable("hazard_levels", hazards => {
     hazards.increments();
@@ -63,36 +60,36 @@ exports.up = async function(knex) {
       .onDelete("CASCADE");
     comments.timestamp("created_at").defaultTo(knex.fn.now());
   });
-  await knex.schema.createTable("issue_comment", i_c => {
-    i_c
-      .integer("user_id")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("users")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
-    i_c
-      .integer("issue_id")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("issues")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
-    i_c
-      .integer("comment_id")
-      .unsigned()
-      .notNullable()
-      .references("id")
-      .inTable("comments")
-      .onUpdate("CASCADE")
-      .onDelete("CASCADE");
-  });
+  //   await knex.schema.createTable("issue_comment", i_c => {
+  //     i_c
+  //       .integer("user_id")
+  //       .unsigned()
+  //       .notNullable()
+  //       .references("id")
+  //       .inTable("users")
+  //       .onUpdate("CASCADE")
+  //       .onDelete("CASCADE");
+  //     i_c
+  //       .integer("issue_id")
+  //       .unsigned()
+  //       .notNullable()
+  //       .references("id")
+  //       .inTable("issues")
+  //       .onUpdate("CASCADE")
+  //       .onDelete("CASCADE");
+  //     i_c
+  //       .integer("comment_id")
+  //       .unsigned()
+  //       .notNullable()
+  //       .references("id")
+  //       .inTable("comments")
+  //       .onUpdate("CASCADE")
+  //       .onDelete("CASCADE");
+  //   });
 };
 
 exports.down = async function(knex) {
-  await knex.schema.dropTableIfExists("issue_comment");
+  //   await knex.schema.dropTableIfExists("issue_comment");
   await knex.schema.dropTableIfExists("comments");
   await knex.schema.dropTableIfExists("issues");
   await knex.schema.dropTableIfExists("hazard_levels");
