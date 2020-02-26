@@ -11,7 +11,7 @@ server.use(helmet());
 server.use(cors());
 
 server.get("/", (req, res) => {
-  res.send("<h3>Co-make api is live!</h3>");
+  res.send("<h3>Co-make API is live!</h3>");
 });
 
 server.use((err, req, res, next) => {
