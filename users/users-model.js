@@ -27,8 +27,11 @@ function findById(id) {
       "last_name",
       "username",
       "email",
-      "location",
-      "is_admin"
+      "city",
+      "state",
+      "zip_code",
+      "is_admin",
+      "created_at"
     );
 }
 
