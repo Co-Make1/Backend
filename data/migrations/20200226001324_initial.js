@@ -12,7 +12,9 @@ exports.up = async function(knex) {
       .unique();
     users.string("first_name");
     users.string("last_name");
-    users.integer("location").notNullable();
+    users.string("city").notNullable();
+    users.string("state").notNullable();
+    users.integer("zip_code").notNullable();
     users.boolean("is_admin").defaultTo(false);
     users.timestamp("created_at").defaultTo(knex.fn.now());
   });
@@ -27,9 +29,7 @@ exports.up = async function(knex) {
     issues.string("issue").notNullable();
     issues.string("issue_description").notNullable();
     issues.string("photo").unique();
-    issues.string("city").notNullable();
-    issues.string("state").notNullable();
-    issues.integer("zip_code").notNullable();
+    issues.integer("location").notNullable();
     issues.integer("upvotes");
     issues
       .integer("user_id")

@@ -1,7 +1,5 @@
 exports.seed = async function(knex) {
-  // await knex("hazard_levels").truncate();
-
-  await knex.raw("TRUNCATE TABLE hazard_levels CASCADE");
+  await knex("hazard_levels").truncate();
   await knex("hazard_levels").insert([
     {
       id: 1,

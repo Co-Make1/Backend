@@ -1,8 +1,7 @@
 const bcrypt = require("bcryptjs");
 
 exports.seed = async function(knex) {
-  // await knex("users");
-  await knex.raw("TRUNCATE TABLE users CASCADE");
+  await knex("users").truncate();
   await knex("users").insert([
     {
       id: 1,
@@ -11,7 +10,9 @@ exports.seed = async function(knex) {
       email: "testUser@email.com",
       first_name: "First Name (test - user)",
       last_name: "Last Name (test - user)",
-      location: 60626,
+      city: "Chicago",
+      state: "Illinois",
+      zip_code: 60626,
       is_admin: false
     },
     {
@@ -21,7 +22,9 @@ exports.seed = async function(knex) {
       email: "testAdmin@email.com",
       first_name: "First Name (test - admin)",
       last_name: "Last Name (test - admin)",
-      location: 60619,
+      city: "Chicago",
+      state: "Illinois",
+      zip_code: 60619,
       is_admin: true
     }
   ]);
