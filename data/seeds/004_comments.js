@@ -1,6 +1,6 @@
 exports.seed = async function(knex) {
   await knex("comments").del();
-  await knex.raw("ALTER SEQUENCE comments_id_seq RESTART WITH 1");
+  await knex.raw("ALTER SEQUENCE comments_id_seq RESTART WITH 4");
   await knex("comments").insert([
     {
       id: 1,

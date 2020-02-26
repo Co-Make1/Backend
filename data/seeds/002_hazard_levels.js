@@ -1,6 +1,6 @@
 exports.seed = async function(knex) {
   await knex("hazard_levels").del();
-  await knex.raw("ALTER SEQUENCE hazard_levels_id_seq RESTART WITH 1");
+  await knex.raw("ALTER SEQUENCE hazard_levels_id_seq RESTART WITH 4");
   await knex("hazard_levels").insert([
     {
       id: 1,
