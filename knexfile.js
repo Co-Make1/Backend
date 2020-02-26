@@ -29,7 +29,7 @@ module.exports = {
   },
 
   production: {
-    client: "pg",
+    client: "sqlite3",
     useNullAsDefault: true,
     connection: {
       database: "comake",
