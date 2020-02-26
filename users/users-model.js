@@ -8,8 +8,8 @@ function find() {
 
 function findBy(filter) {
   return db("users")
-    .select("id", "username")
-    .where(filter);
+    .where(filter)
+    .first("id", "password");
 }
 
 async function add(user) {

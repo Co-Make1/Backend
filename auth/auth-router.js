@@ -47,4 +47,36 @@ router.post(
   }
 );
 
+router.post(
+  "/login",
+  validator("username"),
+  validator("password"),
+  async (req, res, next) => {
+    try {
+      const { username, password } = req.body;
+      const user = await usersModel.findBy({ username });
+
+      if (user) {
+        const passwordValid = await bycrypt.compareSync(
+          password,
+          user.password,
+          10
+        );
+        if (passwordValid) {
+          const token = genToken(user);
+          const userWithoutPassword = await usersModel.findById(user.id);
+          res.status(200).json({
+            token,
+            user: userWithoutPassword
+          });
+        }
+      } else {
+        res.status(401).json({ message: "Invalid Credentials" });
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 module.exports = router;
