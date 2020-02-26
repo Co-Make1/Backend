@@ -13,9 +13,9 @@ module.exports = {
   },
 
   staging: {
-    client: "sqlite3",
+    client: "postgresql",
     connection: {
-      database: "comake",
+      database: "my_db",
       user: "username",
       password: "password"
     },
@@ -24,32 +24,23 @@ module.exports = {
       max: 10
     },
     migrations: {
-      migrations: { directory: "./data/migrations" }
+      tableName: "knex_migrations"
     }
   },
 
   production: {
-    client: "pg",
-    useNullAsDefault: true,
+    client: "postgresql",
     connection: {
-      database: "comake"
+      database: "my_db",
+      user: "username",
+      password: "password"
+    },
+    pool: {
+      min: 2,
+      max: 10
     },
     migrations: {
-      directory: "./data/migrations"
-    },
-    seeds: { directory: "./data/seeds" }
-  },
-  testing: {
-    client: "sqlite3",
-    connection: {
-      filename: "./data/test.db3"
-    },
-    useNullAsDefault: true,
-    migrations: {
-      directory: "./data/migrations"
-    },
-    seeds: {
-      directory: "./data/seeds"
+      tableName: "knex_migrations"
     }
   }
 };
