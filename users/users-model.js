@@ -9,7 +9,7 @@ function find() {
 function findBy(filter) {
   return db("users")
     .where(filter)
-    .first("id", "username", "is_admin");
+    .first("id", "username", "is_admin", "password");
 }
 
 async function add(user) {

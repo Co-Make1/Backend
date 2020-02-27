@@ -57,13 +57,14 @@ router.post(
     try {
       const { username, password } = req.body;
       const user = await usersModel.findBy({ username });
-
+      console.log(user !== undefined);
       if (user) {
         const passwordValid = await bycrypt.compareSync(
           password,
           user.password,
           10
         );
+        console.log(passwordValid);
         if (passwordValid) {
           const token = genToken(user);
           const userWithoutPassword = await usersModel.findById(user.id);
