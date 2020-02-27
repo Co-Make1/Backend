@@ -3,6 +3,7 @@ const router = require("express").Router({
 });
 const restricted = require("../middlewares/restricted");
 const validateCommentId = require("../middlewares/validateCommentId");
+const validateCommentEditingRights = require("../middlewares/validateCommentEditingRights");
 const validator = require("../middlewares/validator");
 
 const db = require("./comments-model");
@@ -57,6 +58,7 @@ router.put(
   "/:commentId",
   restricted,
   validateCommentId,
+  validateCommentEditingRights,
   async (req, res, next) => {
     try {
       const { commentId } = req.params;
@@ -72,6 +74,7 @@ router.delete(
   "/:commentId",
   restricted,
   validateCommentId,
+  validateCommentEditingRights,
   async (req, res, next) => {
     try {
       const { commentId } = req.params;
