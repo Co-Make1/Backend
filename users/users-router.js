@@ -37,7 +37,7 @@ router.put("/:id", restricted, async (req, res, next) => {
 router.delete("/:id", restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const deletedCount = await usersModel.remove(id);
+    const deletedCount = await db.remove(id);
 
     res.json({ removed: deletedCount });
   } catch (err) {
