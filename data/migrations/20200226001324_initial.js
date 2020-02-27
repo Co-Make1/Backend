@@ -40,7 +40,7 @@ exports.up = async function(knex) {
       .onUpdate("CASCADE")
       .onDelete("CASCADE");
     issues
-      .integer("hazard_level_id")
+      .integer("hazard_level")
       .notNullable()
       .unsigned()
       .references("id")

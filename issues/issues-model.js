@@ -3,7 +3,7 @@ const db = require("../data/db-config");
 function find() {
   return db("issues as i")
     .leftJoin("users as u", "i.user_id", "u.id")
-    .leftJoin("hazard_levels as h", "i.hazard_level_id", "h.id")
+    .leftJoin("hazard_levels as h", "i.hazard_level", "h.id")
     .select(
       "i.id",
       "i.issue",
@@ -13,7 +13,8 @@ function find() {
       "i.zip_code",
       "i.upvotes",
       "i.user_id",
-      "u.username"
+      "u.username",
+      "i.created_at"
     )
     .orderBy("i.upvotes", "desc");
 }
@@ -36,7 +37,7 @@ function findById(id) {
   return db("issues as i")
     .where("i.id", id)
     .leftJoin("users as u", "i.user_id", "u.id")
-    .leftJoin("hazard_levels as h", "i.hazard_level_id", "h.id")
+    .leftJoin("hazard_levels as h", "i.hazard_level", "h.id")
     .first(
       "i.id",
       "i.issue",
@@ -46,7 +47,8 @@ function findById(id) {
       "i.zip_code",
       "i.upvotes",
       "i.user_id",
-      "u.username"
+      "u.username",
+      "i.created_at"
     )
     .orderBy("i.upvotes", "desc");
 }

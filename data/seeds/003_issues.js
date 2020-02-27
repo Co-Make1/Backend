@@ -10,7 +10,7 @@ exports.seed = async function(knex) {
       upvotes: 364235,
       zip_code: 60649,
       user_id: 1,
-      hazard_level_id: 1
+      hazard_level: 1
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ exports.seed = async function(knex) {
       upvotes: 3,
       zip_code: 60619,
       user_id: 1,
-      hazard_level_id: 3
+      hazard_level: 3
     }
   ]);
 };

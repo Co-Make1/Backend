@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const admin = require("../middlewares/admin");
+// const admin = require("../middlewares/admin");
 const restricted = require("../middlewares/restricted");
 const validateId = require("../middlewares/validateId");
 
