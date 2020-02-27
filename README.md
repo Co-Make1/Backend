@@ -448,6 +448,7 @@ Required:
 
 - a valid user id
 - a valid issue id
+- user must be original poster
 
 Returns updated issue object
 

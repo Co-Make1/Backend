@@ -3,6 +3,7 @@ const router = require("express").Router({
 });
 const restricted = require("../middlewares/restricted");
 const validateIssueId = require("../middlewares/validateIssueId");
+const validateIssueEditingRights = require("../middlewares/validateIssueEditingRights");
 const validator = require("../middlewares/validator");
 
 const db = require("./issues-model");
@@ -54,15 +55,21 @@ router.get("/:issueId", restricted, validateIssueId, async (req, res, next) => {
   }
 });
 
-router.put("/:issueId", restricted, validateIssueId, async (req, res, next) => {
-  try {
-    const { issueId } = req.params;
-    const issue = await db.update(issueId, req.body);
-    res.json(issue);
-  } catch (err) {
-    next(err);
+router.put(
+  "/:issueId",
+  restricted,
+  validateIssueId,
+  validateIssueEditingRights,
+  async (req, res, next) => {
+    try {
+      const { issueId } = req.params;
+      const issue = await db.update(issueId, req.body);
+      res.json(issue);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.delete(
   "/:issueId",
