@@ -75,6 +75,7 @@ router.delete(
   "/:issueId",
   restricted,
   validateIssueId,
+  validateIssueEditingRights,
   async (req, res, next) => {
     try {
       const { issueId } = req.params;
