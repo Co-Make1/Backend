@@ -299,6 +299,7 @@ Must be logged in
 Required
 
 - valid comment id
+- must be creator of comment
 
 Returns the updated comment object
 
@@ -323,6 +324,7 @@ Must be logged in
 Required
 
 - valid comment id
+- must be creator of comment
 
 Returns the number of records removed
 
