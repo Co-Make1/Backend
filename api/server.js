@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const authRouter = require("../auth/auth-router");
 const usersRouter = require("../users/users-router");
-const issuesRouter = require("../issues/issues-router");
+// const issuesRouter = require("../issues/issues-router");
 const commentsRouter = require("../comments/comments-router");
 
 const server = express();
@@ -16,7 +16,7 @@ server.use(cors());
 
 server.use("/api/auth", authRouter);
 server.use("/api/users", usersRouter);
-server.use("/api/issues", issuesRouter);
+// server.use("/api/issues", issuesRouter);
 server.use("/api/comments", commentsRouter);
 
 server.get("/", (req, res) => {

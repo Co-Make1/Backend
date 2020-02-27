@@ -1,4 +1,6 @@
-const router = require("express").Router();
+const router = require("express").Router({
+  mergeParams: true
+});
 const restricted = require("../middlewares/restricted");
 const validateIssueId = require("../middlewares/validateIssueId");
 const validator = require("../middlewares/validator");
@@ -8,6 +10,16 @@ const db = require("./issues-model");
 router.get("/", restricted, async (req, res, next) => {
   try {
     const issues = await db.find();
+    res.json(issues);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/user", restricted, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const issues = await db.findByUserId(id);
     res.json(issues);
   } catch (err) {
     next(err);
@@ -32,35 +44,40 @@ router.post(
   }
 );
 
-router.get("/:id", restricted, validateIssueId, async (req, res, next) => {
+router.get("/:issueId", restricted, validateIssueId, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await db.findById(id);
-    res.json(user);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.put("/:id", restricted, validateIssueId, async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const issue = await db.update(id, req.body);
+    const { issueId } = req.params;
+    const issue = await db.findById(issueId);
     res.json(issue);
   } catch (err) {
     next(err);
   }
 });
 
-router.delete("/:id", restricted, validateIssueId, async (req, res, next) => {
+router.put("/:issueId", restricted, validateIssueId, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const deletedCount = await db.remove(id);
-
-    res.json({ removed: deletedCount });
+    const { issueId } = req.params;
+    const issue = await db.update(issueId, req.body);
+    res.json(issue);
   } catch (err) {
     next(err);
   }
 });
+
+router.delete(
+  "/:issueId",
+  restricted,
+  validateIssueId,
+  async (req, res, next) => {
+    try {
+      const { issueId } = req.params;
+      const deletedCount = await db.remove(issueId);
+
+      res.json({ removed: deletedCount });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 module.exports = router;

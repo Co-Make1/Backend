@@ -301,11 +301,47 @@ Returns the number of records removed
 
 # GET Get all issues
 
-/api/issues
+/api/users/<user.id>/issues
 
-Must be logged in
+Must be logged in and provide a valid user id
 
-Returns an array of issue objects
+Returns an array of all issue objects
+
+```json
+    {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "zip_code": 60649,
+        "upvotes": 364235,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-02-27 05:47:48"
+    },
+    {
+        "id": 2,
+        "issue": "car crash",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Low Hazard",
+        "zip_code": 60619,
+        "upvotes": 3,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-02-27 05:47:48"
+    }
+]
+```
+
+# GET Get all issues for a specific user
+
+/api/users/<user.id>/issues/user
+
+Must be logged in and provide a valid user id
+
+Returns an array of all issue objects posted by given user
 
 ```json
     {
@@ -337,13 +373,14 @@ Returns an array of issue objects
 
 # GET Get an Issue by id
 
-/api/issues/1
+/api/users/<user.id>/issues/<issue.id>
 
 Must be logged in
 
 Required
 
 - valid issue id
+- valid user id
 
 Returns issue object with specified id
 
@@ -364,18 +401,19 @@ Returns issue object with specified id
 
 # POST Post a new issue
 
-/api/issues
+/api/users/<user.id>/issues/
 
 Must be logged in
 
 Must provide:
 
+- valid user id
 - issue (ex: pothole)
 - issue_description
 - zip_code
-- user_id (must be equal to a valid user id)
 - hazard_level ( 1: Severe Hazard, 2: Moderate Hazard, 3: Low Hazard )
-- Returns newly created issue object
+
+Returns newly created issue object
 
 ```json
 {
@@ -402,12 +440,13 @@ Must provide:
 
 # PUT Update an issue
 
-/api/issues/3
+/api/users/<user.id>/issues/<issue.id>
 
 Must be logged in
 
 Required:
 
+- a valid user id
 - a valid issue id
 
 Returns updated issue object
@@ -429,12 +468,13 @@ Returns updated issue object
 
 # DEL Delete an issue
 
-/api/issues/3
+/api/users/<user.id>/issues/<issue.id>
 
 Must be logged in
 
 Required:
 
+- a valid user id
 - a valid issue id
 
 Returns the number of records deleted

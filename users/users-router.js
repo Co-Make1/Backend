@@ -3,7 +3,11 @@ const router = require("express").Router();
 const restricted = require("../middlewares/restricted");
 const validateId = require("../middlewares/validateId");
 
+const issuesRouter = require("../issues/issues-router");
+
 const db = require("./users-model");
+
+router.use("/:id/issues", issuesRouter);
 
 router.get("/", restricted, async (req, res, next) => {
   try {
@@ -14,10 +18,10 @@ router.get("/", restricted, async (req, res, next) => {
   }
 });
 
-router.get("/:id", validateId, restricted, async (req, res, next) => {
+router.get("/:issueId", validateId, restricted, async (req, res, next) => {
   try {
-    const { id } = req.params;
-    const user = await db.findById(id);
+    const { issueId } = req.params;
+    const user = await db.findById(issueId);
     res.json(user);
   } catch (err) {
     next(err);
