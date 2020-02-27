@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const restricted = require("../middlewares/restricted");
-const validateId = require("../middlewares/validateId");
+const validateCommentId = require("../middlewares/validateCommentId");
 
 const db = require("./comments-model");
 
@@ -23,7 +23,7 @@ router.post("/", restricted, async (req, res, next) => {
   }
 });
 
-router.get("/:id", restricted, async (req, res, next) => {
+router.get("/:id", validateCommentId, restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await db.findById(id);
@@ -33,7 +33,7 @@ router.get("/:id", restricted, async (req, res, next) => {
   }
 });
 
-router.put("/:id", restricted, async (req, res, next) => {
+router.put("/:id", validateCommentId, restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
     const comment = await db.update(id, req.body);
@@ -43,7 +43,7 @@ router.put("/:id", restricted, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", restricted, async (req, res, next) => {
+router.delete("/:id", validateCommentId, restricted, async (req, res, next) => {
   try {
     const { id } = req.params;
     const deletedCount = await db.remove(id);
