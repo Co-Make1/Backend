@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const restricted = require("../middlewares/restricted");
 const validateCommentId = require("../middlewares/validateCommentId");
+const validator = require("../middlewares/validator");
 
 const db = require("./comments-model");
 
@@ -13,14 +14,21 @@ router.get("/", restricted, async (req, res, next) => {
   }
 });
 
-router.post("/", restricted, async (req, res, next) => {
-  try {
-    const newComment = await db.add(req.body);
-    res.status(201).json(newComment);
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  restricted,
+  validator("comment"),
+  validator("issue_id"),
+  validator("user_id"),
+  async (req, res, next) => {
+    try {
+      const newComment = await db.add(req.body);
+      res.status(201).json(newComment);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.get("/:id", restricted, validateCommentId, async (req, res, next) => {
   try {

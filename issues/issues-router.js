@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const restricted = require("../middlewares/restricted");
 const validateIssueId = require("../middlewares/validateIssueId");
+const validator = require("../middlewares/validator");
 
 const db = require("./issues-model");
 
@@ -13,14 +14,23 @@ router.get("/", restricted, async (req, res, next) => {
   }
 });
 
-router.post("/", restricted, async (req, res, next) => {
-  try {
-    const newissue = await db.add(req.body);
-    res.status(201).json(newissue);
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  validator("issue"),
+  validator("issue_description"),
+  validator("zip_code"),
+  validator("user_id"),
+  validator("hazard_level"),
+  restricted,
+  async (req, res, next) => {
+    try {
+      const newissue = await db.add(req.body);
+      res.status(201).json(newissue);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.get("/:id", restricted, validateIssueId, async (req, res, next) => {
   try {
