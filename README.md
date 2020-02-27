@@ -14,16 +14,25 @@ Is the server live?
 /api/auth/register
 
 expects an object:
+Required:
+
+- username
+- email
+- city
+- state
+- zip_code
 
 ```json
 {
-    id: 1,
-  username: string //required,
-  email: string //required,
-  first_name: string,
-  last_name: string,
-  location: integer, //required - zip code
-  is_admin: false //defaults to false (0 === false)
+  "id": 1,
+  "username": string,
+  "email": string,
+  "first_name": string,
+  "last_name": string,
+  "city": string,
+  "state": string,
+  "zip_code": integer,
+  "is_admin": false
 }
 ```
 
@@ -38,7 +47,9 @@ returns a 201 SUCCESS Status and the newly created user object:
     "last_name": "Woowoo",
     "username": "Pothole Patty",
     "email": "example@email.com",
-    "location": 60626,
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60626,
     "is_admin": 0
   }
 }
@@ -50,10 +61,15 @@ returns a 201 SUCCESS Status and the newly created user object:
 
 Expects an Object:
 
+Required:
+
+- username
+- password
+
 ```json
 {
-  "username": "username", //required
-  "password": "password" //required
+  "username": "username",
+  "password": "password"
 }
 ```
 
@@ -221,6 +237,12 @@ Returns a single comment object
 
 Must be logged in, provide a valid user_id and issue_id
 
+Required:
+
+- comment
+- user_id (must be a valid user id)
+- issue_id (must be a valid issue id)
+
 Returns the new comment:
 
 ```json
@@ -239,7 +261,11 @@ Returns the new comment:
 
 /api/comments/4
 
-Must be logged in and provide a valid comment id
+Must be logged in
+
+Required
+
+- valid comment id
 
 Returns the updated comment object
 
@@ -259,7 +285,11 @@ Returns the updated comment object
 
 /api/comments/4
 
-Must be logged in and provide a valid comment id
+Must be logged in
+
+Required
+
+- valid comment id
 
 Returns the number of records removed
 
@@ -309,7 +339,11 @@ Returns an array of issue objects
 
 /api/issues/1
 
-Must be logged in and provide a valid issue id.
+Must be logged in
+
+Required
+
+- valid issue id
 
 Returns issue object with specified id
 
@@ -370,7 +404,11 @@ Must provide:
 
 /api/issues/3
 
-Must be logged in and provide a valid issue id
+Must be logged in
+
+Required:
+
+- a valid issue id
 
 Returns updated issue object
 
@@ -393,7 +431,11 @@ Returns updated issue object
 
 /api/issues/3
 
-Must be logged in, and provide a valid issue id
+Must be logged in
+
+Required:
+
+- a valid issue id
 
 Returns the number of records deleted
 
