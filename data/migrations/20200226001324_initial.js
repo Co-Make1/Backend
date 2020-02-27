@@ -29,7 +29,7 @@ exports.up = async function(knex) {
     issues.string("issue").notNullable();
     issues.string("issue_description").notNullable();
     issues.string("photo").unique();
-    issues.integer("location").notNullable();
+    issues.integer("zip_code").notNullable();
     issues.integer("upvotes");
     issues
       .integer("user_id")
