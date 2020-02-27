@@ -1,12 +1,15 @@
 const router = require("express").Router({
   mergeParams: true
 });
+const commentsRouter = require("../comments/comments-router");
 const restricted = require("../middlewares/restricted");
 const validateIssueId = require("../middlewares/validateIssueId");
 const validateIssueEditingRights = require("../middlewares/validateIssueEditingRights");
 const validator = require("../middlewares/validator");
 
 const db = require("./issues-model");
+
+router.use("/:issueId/comments", commentsRouter);
 
 router.get("/", restricted, async (req, res, next) => {
   try {

@@ -177,9 +177,44 @@ Returns the number of records removed
 }
 ```
 
-# GET Get All Comments
+<!-- # GET Get All Comments
 
-/api/comments
+/api/users/<user.id>/issues/1/comments/
+
+Returns an array of comments:
+
+```json
+[
+  {
+    "id": 1,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the first comment."
+  },
+  {
+    "id": 2,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the second comment."
+  },
+  {
+    "id": 3,
+    "user_id": 1,
+    "username": "testUser",
+    "issue_id": 1,
+    "issue": "pothole",
+    "comment": "I'm the third comment."
+  }
+]
+``` -->
+
+# GET Get All Comments For A Given Issue
+
+/api/users/<user.id>/issues/<issue.id>/comments
 
 Returns an array of comments:
 
@@ -214,7 +249,7 @@ Returns an array of comments:
 
 # GET Get Comment By Id
 
-/api/comments/4
+/api/users/<user.id>/issues/<issue.id>/comments/<comment.id>
 
 Must be logged in and provide a valid comment id
 
@@ -259,7 +294,7 @@ Returns the new comment:
 
 # PUT Update a comment
 
-/api/comments/4
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
 
 Must be logged in
 
@@ -283,7 +318,7 @@ Returns the updated comment object
 
 # DEL Delete a comment
 
-/api/comments/4
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
 
 Must be logged in
 
@@ -477,6 +512,7 @@ Required:
 
 - a valid user id
 - a valid issue id
+- user must be original poster
 
 Returns the number of records deleted
 
