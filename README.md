@@ -268,15 +268,13 @@ Returns a single comment object
 
 # POST Post a new comment
 
-/api/comments
+/api/users/<user.id>/issues/<issues.id>/comments/
 
-Must be logged in, provide a valid user_id and issue_id
+Must be logged in
 
 Required:
 
-- comment
-- user_id (must be a valid user id)
-- issue_id (must be a valid issue id)
+- comment body
 
 Returns the new comment:
 
