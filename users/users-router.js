@@ -8,7 +8,6 @@ const db = require("./users-model");
 router.get("/", restricted, async (req, res, next) => {
   try {
     const users = await db.find();
-    console.log(users);
     res.json(users);
   } catch (err) {
     next(err);

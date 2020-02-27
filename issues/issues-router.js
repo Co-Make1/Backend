@@ -7,7 +7,6 @@ const db = require("./issues-model");
 router.get("/", restricted, async (req, res, next) => {
   try {
     const issues = await db.find();
-    console.log(issues);
     res.json(issues);
   } catch (err) {
     next(err);

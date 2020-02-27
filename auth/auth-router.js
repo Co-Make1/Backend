@@ -39,7 +39,6 @@ router.post(
       const registerUser = await usersModel.add(user);
       const token = await genToken(registerUser);
       const newUser = await usersModel.findById(registerUser.id);
-      console.log(newUser);
       res.status(201).json({
         token,
         user: newUser

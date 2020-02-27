@@ -5,7 +5,6 @@ module.exports = (req, res, next) => {
   const token = req.headers.authorization;
 
   if (token) {
-    console.log(token);
     jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
       if (err) {
         res.status(403).json({

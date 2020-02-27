@@ -7,7 +7,6 @@ const db = require("./comments-model");
 router.get("/", restricted, async (req, res, next) => {
   try {
     const comments = await db.find();
-    console.log(comments);
     res.json(comments);
   } catch (err) {
     next(err);
