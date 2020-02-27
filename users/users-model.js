@@ -3,13 +3,13 @@ const bcrypt = require("bcryptjs");
 const db = require("../data/db-config");
 
 function find() {
-  return db("users").select("id", "username");
+  return db("users").select("id", "username", "is_admin");
 }
 
 function findBy(filter) {
   return db("users")
     .where(filter)
-    .first("id", "password");
+    .first("id", "username", "is_admin");
 }
 
 async function add(user) {
@@ -32,7 +32,16 @@ function findById(id) {
       "zip_code",
       "is_admin",
       "created_at"
-    );
+    )
+    .orderBy("zip_code", "asc");
+}
+
+async function update(id, body) {
+  await db("users")
+    .where({ id })
+    .update(body);
+
+  return findById(id);
 }
 
 function remove(id) {
@@ -46,5 +55,6 @@ module.exports = {
   find,
   findBy,
   findById,
+  update,
   remove
 };

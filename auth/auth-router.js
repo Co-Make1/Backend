@@ -12,9 +12,10 @@ function genToken(user) {
   return jwt.sign(
     {
       userId: user.id,
-      message: `Welcome ${user.username}`
+      message: `Welcome ${user.username}`,
+      is_admin: user.is_admin
     },
-    secrets.jwt,
+    process.env.JWT_SECRET,
     {
       expiresIn: "7d"
     }
