@@ -40,12 +40,13 @@ router.post(
   validator("zip_code"),
   validator("hazard_level"),
   restricted,
+  validateId,
   async (req, res, next) => {
-    let { body } = req;
-    body = { ...body, user_id: req.params.id };
     try {
-      const newissue = await db.add(body);
-      res.status(201).json(newissue);
+      let { body } = req;
+      body = { ...body, user_id: Number(req.params.id) };
+      const newIssue = await db.add(body);
+      res.status(201).json(newIssue);
     } catch (err) {
       next(err);
     }
