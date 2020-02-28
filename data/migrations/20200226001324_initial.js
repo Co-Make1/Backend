@@ -29,6 +29,8 @@ exports.up = async function(knex) {
     issues.string("issue").notNullable();
     issues.string("issue_description").notNullable();
     issues.string("photo").unique();
+    issues.string("city").notNullable();
+    issues.string("state").notNullable();
     issues.integer("zip_code").notNullable();
     issues.integer("upvotes");
     issues
@@ -70,36 +72,9 @@ exports.up = async function(knex) {
       .onDelete("CASCADE");
     comments.timestamp("created_at").defaultTo(knex.fn.now());
   });
-  //   await knex.schema.createTable("issue_comment", i_c => {
-  //     i_c
-  //       .integer("user_id")
-  //       .unsigned()
-  //       .notNullable()
-  //       .references("id")
-  //       .inTable("users")
-  //       .onUpdate("CASCADE")
-  //       .onDelete("CASCADE");
-  //     i_c
-  //       .integer("issue_id")
-  //       .unsigned()
-  //       .notNullable()
-  //       .references("id")
-  //       .inTable("issues")
-  //       .onUpdate("CASCADE")
-  //       .onDelete("CASCADE");
-  //     i_c
-  //       .integer("comment_id")
-  //       .unsigned()
-  //       .notNullable()
-  //       .references("id")
-  //       .inTable("comments")
-  //       .onUpdate("CASCADE")
-  //       .onDelete("CASCADE");
-  //   });
 };
 
 exports.down = async function(knex) {
-  //   await knex.schema.dropTableIfExists("issue_comment");
   await knex.schema.dropTableIfExists("comments");
   await knex.schema.dropTableIfExists("issues");
   await knex.schema.dropTableIfExists("hazard_levels");

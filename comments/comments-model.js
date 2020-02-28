@@ -45,6 +45,23 @@ function findById(id) {
     );
 }
 
+function findByIssueId(id) {
+  return db("comments as c")
+    .where("c.issue_id", id)
+    .leftJoin("users as u", "c.user_id", "u.id")
+    .leftJoin("issues as i", "c.issue_id", "i.id")
+    .orderBy("c.created_at", "asc")
+    .select(
+      "c.id",
+      "c.user_id",
+      "u.username",
+      "c.issue_id",
+      "i.issue",
+      "c.comment",
+      "c.created_at"
+    );
+}
+
 async function update(id, body) {
   await db("comments")
     .where({ id })
@@ -64,6 +81,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  findByIssueId,
   update,
   remove
 };

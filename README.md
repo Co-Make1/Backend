@@ -22,7 +22,7 @@ Required:
 - state
 - zip_code
 
-```json
+```js
 {
   "id": 1,
   "username": string,
@@ -101,7 +101,9 @@ Returns a 401 FAILURE message when email and/or password do match records, along
 
 Restricted Route, must be logged in /_and an admin - not yet added_/ to access
 
-returns an array of user objects containing the "id", "username", "is_admin"
+returns an array of user objects containing the
+
+- is_admin is a boolean where 0 === false and 1 === true
 
 ```json
 [
@@ -177,9 +179,203 @@ Returns the number of records removed
 }
 ```
 
-# GET Get All Comments
+# GET Get all issues
 
-/api/comments
+/api/users/<user.id>/issues
+
+Must be logged in and provide a valid user id
+
+Returns an array of all issue objects
+
+```json
+[
+  {
+    "id": 1,
+    "issue": "pothole",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60649,
+    "upvotes": 364235,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  },
+  {
+    "id": 2,
+    "issue": "car crash",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Low Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60619,
+    "upvotes": 3,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  }
+]
+```
+
+# GET Get all issues for a specific user
+
+/api/users/<user.id>/issues/user
+
+Must be logged in and provide a valid user id
+
+Returns an array of all issue objects posted by given user
+
+```json
+[
+  {
+    "id": 1,
+    "issue": "pothole",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "zip_code": 60649,
+    "upvotes": 364235,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  },
+  {
+    "id": 2,
+    "issue": "car crash",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Low Hazard",
+    "zip_code": 60619,
+    "upvotes": 3,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-02-28 02:33:46"
+  }
+]
+```
+
+# GET Get an Issue by id
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required
+
+- valid issue id
+- valid user id
+
+Returns issue object with specified id
+
+```json
+{
+  "id": 2,
+  "issue": "car crash",
+  "issue_description": "I'm an issue description",
+  "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+  "hazard_level": "Low Hazard",
+  "city": "Chicago",
+  "state": "Illinois",
+  "zip_code": 60619,
+  "upvotes": 3,
+  "user_id": 1,
+  "username": "testUser",
+  "created_at": "2020-02-28 02:33:46"
+}
+```
+
+# POST Post a new issue
+
+/api/users/<user.id>/issues/
+
+Must be logged in
+
+Must provide:
+
+- valid user id
+- issue (ex: pothole)
+- issue_description
+- city
+- state
+- zip_code
+- hazard_level ( 1: Severe Hazard, 2: Moderate Hazard, 3: Low Hazard )
+
+Returns newly created issue object
+
+```json
+{
+  "id": 2,
+  "issue": "Newly Created Issue",
+  "issue_description": "I'm an issue description",
+  "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+  "hazard_level": "Low Hazard",
+  "city": "Chicago",
+  "state": "Illinois",
+  "zip_code": 60619,
+  "upvotes": 3,
+  "user_id": 1,
+  "username": "testUser",
+  "created_at": "2020-02-28 02:33:46"
+}
+```
+
+# PUT Update an issue
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+- user must be original poster
+
+Returns updated issue object
+
+```json
+{
+  "id": 4,
+  "issue": "I whine too much",
+  "issue_description": "Actually, I'm not sure if it's the dog, or the neighbor, but either way, it needs to stop!",
+  "photo": null,
+  "hazard_level": "Moderate Hazard",
+  "city": "Chicago",
+  "state": "Illinois",
+  "zip_code": 60610,
+  "upvotes": null,
+  "user_id": 2,
+  "username": "testAdmin",
+  "created_at": "2020-02-27 06:21:15"
+}
+```
+
+# DEL Delete an issue
+
+/api/users/<user.id>/issues/<issue.id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+- user must be original poster
+
+Returns the number of records deleted
+
+```json
+{
+  "removed": 1
+}
+```
+
+# GET Get All Comments For A Given Issue
+
+/api/users/<user.id>/issues/<issue.id>/comments
 
 Returns an array of comments:
 
@@ -214,7 +410,7 @@ Returns an array of comments:
 
 # GET Get Comment By Id
 
-/api/comments/4
+/api/users/<user.id>/issues/<issue.id>/comments/<comment.id>
 
 Must be logged in and provide a valid comment id
 
@@ -233,15 +429,13 @@ Returns a single comment object
 
 # POST Post a new comment
 
-/api/comments
+/api/users/<user.id>/issues/<issues.id>/comments/
 
-Must be logged in, provide a valid user_id and issue_id
+Must be logged in
 
 Required:
 
-- comment
-- user_id (must be a valid user id)
-- issue_id (must be a valid issue id)
+- comment body
 
 Returns the new comment:
 
@@ -259,13 +453,14 @@ Returns the new comment:
 
 # PUT Update a comment
 
-/api/comments/4
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
 
 Must be logged in
 
 Required
 
 - valid comment id
+- must be creator of comment
 
 Returns the updated comment object
 
@@ -283,161 +478,16 @@ Returns the updated comment object
 
 # DEL Delete a comment
 
-/api/comments/4
+/api/users/<user.id>/issues/<issues.id>/comments/<comment.id>
 
 Must be logged in
 
 Required
 
 - valid comment id
+- must be creator of comment
 
 Returns the number of records removed
-
-```json
-{
-  "removed": 1
-}
-```
-
-# GET Get all issues
-
-/api/issues
-
-Must be logged in
-
-Returns an array of issue objects
-
-```json
-    {
-        "id": 1,
-        "issue": "pothole",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "zip_code": 60649,
-        "upvotes": 364235,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-02-27 05:47:48"
-    },
-    {
-        "id": 2,
-        "issue": "car crash",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Low Hazard",
-        "zip_code": 60619,
-        "upvotes": 3,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-02-27 05:47:48"
-    }
-]
-```
-
-# GET Get an Issue by id
-
-/api/issues/1
-
-Must be logged in
-
-Required
-
-- valid issue id
-
-Returns issue object with specified id
-
-```json
-{
-  "id": 1,
-  "issue": "pothole",
-  "issue_description": "I'm an issue description",
-  "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-  "hazard_level": "Severe Hazard",
-  "zip_code": 60649,
-  "upvotes": 364235,
-  "user_id": 1,
-  "username": "testUser",
-  "created_at": "2020-02-27 05:47:48"
-}
-```
-
-# POST Post a new issue
-
-/api/issues
-
-Must be logged in
-
-Must provide:
-
-- issue (ex: pothole)
-- issue_description
-- zip_code
-- user_id (must be equal to a valid user id)
-- hazard_level ( 1: Severe Hazard, 2: Moderate Hazard, 3: Low Hazard )
-- Returns newly created issue object
-
-```json
-{
-    "id": 5,
-    "issue": "Neighbors dog won't stop barking",
-    "issue_description": "Actually, I'm not sure if it's the dog, or the neighbor, but either way, it needs to stop!",
-    "photo": null,
-    "hazard_level": "Moderate Hazard",
-    "zip_code": 60610,
-    "upvotes": null,
-    "user_id": 2,
-    "username": "testAdmin",
-    "created_at": "2020-02-27 06:32:53"
-}
-
-{
-	"issue": "Neighbors dog won't stop barking",
-	"issue_description": "Actually, I'm not sure if it's the dog, or the neighbor, but either way, it needs to stop!",
-	"zip_code": 60610,
-	"user_id": 2,
-	"hazard_level": 2
-}
-```
-
-# PUT Update an issue
-
-/api/issues/3
-
-Must be logged in
-
-Required:
-
-- a valid issue id
-
-Returns updated issue object
-
-```json
-{
-  "id": 4,
-  "issue": "I whine too much",
-  "issue_description": "Actually, I'm not sure if it's the dog, or the neighbor, but either way, it needs to stop!",
-  "photo": null,
-  "hazard_level": "Moderate Hazard",
-  "zip_code": 60610,
-  "upvotes": null,
-  "user_id": 2,
-  "username": "testAdmin",
-  "created_at": "2020-02-27 06:21:15"
-}
-```
-
-# DEL Delete an issue
-
-/api/issues/3
-
-Must be logged in
-
-Required:
-
-- a valid issue id
-
-Returns the number of records deleted
 
 ```json
 {
