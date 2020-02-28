@@ -38,7 +38,6 @@ router.post(
   validator("city"),
   validator("state"),
   validator("zip_code"),
-  validator("user_id"),
   validator("hazard_level"),
   restricted,
   async (req, res, next) => {
