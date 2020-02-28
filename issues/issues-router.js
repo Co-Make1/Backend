@@ -2,6 +2,7 @@ const router = require("express").Router();
 const restricted = require("../middlewares/restricted");
 const validateIssueId = require("../middlewares/validateIssueId");
 const validator = require("../middlewares/validator");
+const validateId = require("../middlewares/validateId");
 
 const db = require("./issues-model");
 
@@ -32,15 +33,21 @@ router.post(
   }
 );
 
-router.get("/:id", restricted, validateIssueId, async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const user = await db.findById(id);
-    res.json(user);
-  } catch (err) {
-    next(err);
+router.get(
+  "/:id",
+  restricted,
+  validateId,
+  validateIssueId,
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const user = await db.findById(id);
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.put("/:id", restricted, validateIssueId, async (req, res, next) => {
   try {
