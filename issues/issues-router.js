@@ -51,13 +51,19 @@ router.post(
   }
 );
 
-router.get("/:issueId", restricted, validateIssueId, async (req, res, next) => {
-  try {
-    const { issueId } = req.params;
-    const issue = await db.findById(issueId);
-    res.json(issue);
-  } catch (err) {
-    next(err);
+router.get(
+  "/:issueId",
+  restricted,
+  validateId,
+  validateIssueId,
+  async (req, res, next) => {
+    try {
+      const { issueId } = req.params;
+      const issue = await db.findById(issueId);
+      res.json(issue);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 
