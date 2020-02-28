@@ -34,6 +34,8 @@ router.post(
   "/",
   validator("issue"),
   validator("issue_description"),
+  validator("city"),
+  validator("state"),
   validator("zip_code"),
   validator("user_id"),
   validator("hazard_level"),
