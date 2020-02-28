@@ -10,6 +10,8 @@ function find() {
       "i.issue_description",
       "i.photo",
       "h.hazard_level",
+      "i.city",
+      "i.state",
       "i.zip_code",
       "i.upvotes",
       "i.user_id",
@@ -44,6 +46,28 @@ function findById(id) {
       "i.issue_description",
       "i.photo",
       "h.hazard_level",
+      "i.city",
+      "i.state",
+      "i.zip_code",
+      "i.upvotes",
+      "i.user_id",
+      "u.username",
+      "i.created_at"
+    )
+    .orderBy("i.upvotes", "desc");
+}
+
+function findByUserId(id) {
+  return db("issues as i")
+    .where("i.user_id", id)
+    .leftJoin("users as u", "i.user_id", "u.id")
+    .leftJoin("hazard_levels as h", "i.hazard_level", "h.id")
+    .select(
+      "i.id",
+      "i.issue",
+      "i.issue_description",
+      "i.photo",
+      "h.hazard_level",
       "i.zip_code",
       "i.upvotes",
       "i.user_id",
@@ -72,6 +96,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  findByUserId,
   update,
   remove
 };

@@ -3,14 +3,13 @@ const issuesModel = require("../issues/issues-model");
 module.exports = async (req, res, next) => {
   try {
     const issue = await issuesModel.findById(req.params.issueId);
-    if (!issue) {
-      res
-        .status(404)
-        .json({
-          message: `No issue found with the id of ${req.params.issueId}`
-        });
+    if (Number(issue.user_id) !== Number(req.params.id)) {
+      res.status(403).json({
+        message: `User can only edit issues they have created.`
+      });
+    } else {
+      next();
     }
-    next();
   } catch (err) {
     next();
   }
