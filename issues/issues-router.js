@@ -41,8 +41,10 @@ router.post(
   validator("hazard_level"),
   restricted,
   async (req, res, next) => {
+    let { body } = req;
+    body = { ...body, user_id: req.params.id };
     try {
-      const newissue = await db.add(req.body);
+      const newissue = await db.add(body);
       res.status(201).json(newissue);
     } catch (err) {
       next(err);
