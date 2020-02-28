@@ -22,8 +22,8 @@ router.get("/", restricted, validateId, async (req, res, next) => {
 });
 
 router.get("/user", restricted, async (req, res, next) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const issues = await db.findByUserId(id);
     res.json(issues);
   } catch (err) {
