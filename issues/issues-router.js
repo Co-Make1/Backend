@@ -12,7 +12,7 @@ const db = require("./issues-model");
 
 router.use("/:issueId/comments", commentsRouter);
 
-router.get("/", restricted, async (req, res, next) => {
+router.get("/", restricted, validateId, async (req, res, next) => {
   try {
     const issues = await db.find();
     res.json(issues);
@@ -70,6 +70,7 @@ router.get(
 router.put(
   "/:issueId",
   restricted,
+  validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {
@@ -86,6 +87,7 @@ router.put(
 router.delete(
   "/:issueId",
   restricted,
+  validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {

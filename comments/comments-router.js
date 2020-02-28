@@ -4,45 +4,69 @@ const router = require("express").Router({
 const restricted = require("../middlewares/restricted");
 const validateCommentId = require("../middlewares/validateCommentId");
 const validateCommentEditingRights = require("../middlewares/validateCommentEditingRights");
+const validateId = require("../middlewares/validateId");
+const validateIssueId = require("../middlewares/validateIssueId");
 const validator = require("../middlewares/validator");
 
 const db = require("./comments-model");
 
-router.get("/allComments", restricted, async (req, res, next) => {
-  try {
-    const comments = await db.find();
-    res.json(comments);
-  } catch (err) {
-    next(err);
+router.get(
+  "/allComments",
+  restricted,
+  validateId,
+  validateIssueId,
+  validateIssueId,
+  async (req, res, next) => {
+    try {
+      const comments = await db.find();
+      res.json(comments);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
-router.get("/", restricted, async (req, res, next) => {
-  const { issueId } = req.params;
-  try {
-    const comments = await db.findByIssueId(issueId);
-    res.json(comments);
-  } catch (err) {
-    next(err);
+router.get(
+  "/",
+  restricted,
+  validateId,
+  validateIssueId,
+  async (req, res, next) => {
+    const { issueId } = req.params;
+    try {
+      const comments = await db.findByIssueId(issueId);
+      res.json(comments);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
-router.post("/", restricted, validator("comment"), async (req, res, next) => {
-  let { body } = req;
-  body = { ...body, issue_id: req.params.issueId, user_id: req.params.id };
-  try {
-    console.log(body);
-    const newComment = await db.add(body);
-    res.status(201).json(newComment);
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  restricted,
+  validateId,
+  validator("comment"),
+  validateIssueId,
+  async (req, res, next) => {
+    let { body } = req;
+    body = { ...body, issue_id: req.params.issueId, user_id: req.params.id };
+    try {
+      console.log(body);
+      const newComment = await db.add(body);
+      res.status(201).json(newComment);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.get(
   "/:commentId",
   restricted,
+  validateId,
   validateCommentId,
+  validateIssueId,
   async (req, res, next) => {
     try {
       const { commentId } = req.params;
@@ -57,8 +81,10 @@ router.get(
 router.put(
   "/:commentId",
   restricted,
+  validateId,
   validateCommentId,
   validateCommentEditingRights,
+  validateIssueId,
   async (req, res, next) => {
     try {
       const { commentId } = req.params;
@@ -73,8 +99,10 @@ router.put(
 router.delete(
   "/:commentId",
   restricted,
+  validateId,
   validateCommentId,
   validateCommentEditingRights,
+  validateIssueId,
   async (req, res, next) => {
     try {
       const { commentId } = req.params;
