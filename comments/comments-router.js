@@ -28,7 +28,7 @@ router.get(
 
 router.get(
   "/",
-  restricted,
+  // restricted,
   validateId,
   validateIssueId,
   async (req, res, next) => {
@@ -44,7 +44,7 @@ router.get(
 
 router.post(
   "/",
-  restricted,
+  // restricted,
   validateId,
   validator("comment"),
   validateIssueId,
@@ -63,7 +63,7 @@ router.post(
 
 router.get(
   "/:commentId",
-  restricted,
+  // restricted,
   validateId,
   validateCommentId,
   validateIssueId,
@@ -80,7 +80,7 @@ router.get(
 
 router.put(
   "/:commentId",
-  restricted,
+  // restricted,
   validateId,
   validateCommentId,
   validateCommentEditingRights,
@@ -98,7 +98,7 @@ router.put(
 
 router.delete(
   "/:commentId",
-  restricted,
+  // restricted,
   validateId,
   validateCommentId,
   validateCommentEditingRights,
