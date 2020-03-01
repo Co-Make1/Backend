@@ -4,7 +4,6 @@ const db = require("../data/db-config")
 
 
 beforeEach(async () => {
-  await db("users").truncate()
     await db.seed.run
     await db("users").truncate()
 })
@@ -19,12 +18,12 @@ const testComment = {
 
     describe("Get Comments",  () => {
       test("get all comments", async () => {
-        const regRes = await supertest(server)
+        await supertest(server)
           .post("/api/auth/register")
           .send({ 
-              username: "SuperTest1", 
+              username: "SuperTest2", 
           password: "password",
-          email: "super@test1.com",
+          email: "super@test2.com",
           first_name: "Super",
           last_name: "Test",
           city: "SuperTestapolis",
@@ -32,14 +31,33 @@ const testComment = {
           zip_code: 61401,
           is_admin: false
        });
+       const res = await supertest(server)
+       .get("/api/users/1/issues/1/comments")
+       expect(res.status).toBe(200)
+       expect(res.type).toBe("application/json")
+       expect(res.body[0].comment).toBe("I'm the first comment.");
 
       });
-      // test("post a new comment", async () => {
-      //   const comments = await supertest(server)
-      //   .get("/api/users/1/issues/1/comments", testComment)
-      // expect(comments.status).toBe(200);
-      // expect(comments.type).toBe("application/json");
-      // expect(comments.body[0].comment).toBe("I'm the first comment.");
-      //  })
+      test("post a new comment", async () => {
+        await supertest(server)
+        .post("/api/auth/register")
+        .send({ 
+            username: "SuperTest3", 
+        password: "password",
+        email: "super@test3.com",
+        first_name: "Super",
+        last_name: "Test",
+        city: "SuperTestapolis",
+        state: "Stable",
+        zip_code: 61401,
+        is_admin: false
+     });
+        const postComment = await supertest(server)
+        .post("/api/users/1/issues/1/comments")
+        .send(testComment)
+      expect(postComment.status).toBe(201);
+      expect(postComment.type).toBe("application/json");
+      expect(postComment.body.comment).toBe("new commenta");
+       })
 
       });
