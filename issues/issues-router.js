@@ -12,7 +12,7 @@ const db = require("./issues-model");
 
 router.use("/:issueId/comments", commentsRouter);
 
-router.get("/", restricted, validateId, async (req, res, next) => {
+router.get("/", /*restricted,*/ validateId, async (req, res, next) => {
   try {
     const issues = await db.find();
     res.json(issues);
@@ -21,7 +21,7 @@ router.get("/", restricted, validateId, async (req, res, next) => {
   }
 });
 
-router.get("/user", restricted, async (req, res, next) => {
+router.get("/user", /*restricted,*/ async (req, res, next) => {
   try {
     const { id } = req.params;
     const issues = await db.findByUserId(id);
@@ -39,7 +39,7 @@ router.post(
   validator("state"),
   validator("zip_code"),
   validator("hazard_level"),
-  restricted,
+  /*restricted,*/
   validateId,
   async (req, res, next) => {
     try {
@@ -55,7 +55,7 @@ router.post(
 
 router.get(
   "/:issueId",
-  restricted,
+  /*restricted,*/
   validateId,
   validateIssueId,
   async (req, res, next) => {
@@ -71,7 +71,7 @@ router.get(
 
 router.put(
   "/:issueId",
-  restricted,
+  /*restricted,*/
   validateId,
   validateIssueId,
   validateIssueEditingRights,
@@ -88,7 +88,7 @@ router.put(
 
 router.delete(
   "/:issueId",
-  restricted,
+  /*restricted,*/
   validateId,
   validateIssueId,
   validateIssueEditingRights,

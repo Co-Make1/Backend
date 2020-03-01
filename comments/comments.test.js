@@ -17,7 +17,6 @@ const testComment = {
   comment: "new comment"
 }
 
-
     describe("Get Comments",  () => {
       test("get all comments", async () => {
         const regRes = await supertest(server)
@@ -33,20 +32,14 @@ const testComment = {
           zip_code: 61401,
           is_admin: false
        });
-        const comments = await supertest(server)
-        .get("/api/users/1/issues/1/comments")
-      expect(comments.status).toBe(200);
-      expect(comments.type).toBe("application/json");
-      expect(comments.body[0].comment).toBe("I'm the first comment.");
-
-      // const postComment = await supertest(server)
-      // .post("/api/users/1/issues/1/comments", testComment)
-
-      // expect(postComment.status).toBe(postComment.error.message);
-      // expect(postComment.type).toBe("application/json");
-      // expect(postComment.body.comment).toBe("new comment");
 
       });
-
+      // test("post a new comment", async () => {
+      //   const comments = await supertest(server)
+      //   .get("/api/users/1/issues/1/comments", testComment)
+      // expect(comments.status).toBe(200);
+      // expect(comments.type).toBe("application/json");
+      // expect(comments.body[0].comment).toBe("I'm the first comment.");
+      //  })
 
       });
