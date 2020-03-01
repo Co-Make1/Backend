@@ -57,7 +57,7 @@ const testComment = {
         .send(testComment)
       expect(postComment.status).toBe(201);
       expect(postComment.type).toBe("application/json");
-      expect(postComment.body.comment).toBe("new commenta");
+      expect(postComment.body.comment).toBe("new comment");
        })
 
       });
