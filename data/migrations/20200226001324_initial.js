@@ -32,7 +32,6 @@ exports.up = async function(knex) {
     issues.string("city").notNullable();
     issues.string("state").notNullable();
     issues.integer("zip_code").notNullable();
-    issues.integer("upvotes");
     issues
       .integer("user_id")
       .notNullable()
@@ -51,6 +50,27 @@ exports.up = async function(knex) {
       .onDelete("CASCADE");
     issues.timestamp("created_at").defaultTo(knex.fn.now());
   });
+  await knex.schema.createTable("upvotes", upvotes => {
+    upvotes.increments()
+    upvotes.integer("upvotes")
+    upvotes
+    .integer("user_id")
+    .notNullable()
+    .unsigned()
+    .references("id")
+    .inTable("users")
+    .onUpdate("CASCADE")
+    .onDelete("CASCADE")
+    upvotes
+    .integer("issue_id")
+    .notNullable()
+    .unsigned()
+    .references("id")
+    .inTable("issues")
+    .onUpdate("CASCADE")
+    .onDelete("CASCADE");
+    upvotes.timestamp("created_at").defaultTo(knex.fn.now())
+  })
   await knex.schema.createTable("comments", comments => {
     comments.increments();
     comments.string("comment").notNullable();
@@ -76,6 +96,7 @@ exports.up = async function(knex) {
 
 exports.down = async function(knex) {
   await knex.schema.dropTableIfExists("comments");
+  await knex.schema.dropTableIfExists("upvotes");
   await knex.schema.dropTableIfExists("issues");
   await knex.schema.dropTableIfExists("hazard_levels");
   await knex.schema.dropTableIfExists("users");

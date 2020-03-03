@@ -1,17 +1,20 @@
 const router = require("express").Router({
   mergeParams: true
 });
+const upvotesRouter = require("../upvotes/upvotes-router");
 const commentsRouter = require("../comments/comments-router");
 const restricted = require("../middlewares/restricted");
+const validateId = require("../middlewares/validateId")
 const validateIssueId = require("../middlewares/validateIssueId");
 const validateIssueEditingRights = require("../middlewares/validateIssueEditingRights");
 const validator = require("../middlewares/validator");
 
 const db = require("./issues-model");
 
-router.use("/:issueId/comments", commentsRouter);
+router.use("/:issue_id/comments", commentsRouter);
+router.use("/:issue_id/upvotes", upvotesRouter);
 
-router.get("/", restricted, async (req, res, next) => {
+router.get("/", restricted, validateId, async (req, res, next) => {
   try {
     const issues = await db.find();
     res.json(issues);
@@ -20,7 +23,8 @@ router.get("/", restricted, async (req, res, next) => {
   }
 });
 
-router.get("/user", restricted, async (req, res, next) => {
+router.get("/user", restricted,
+validateId, async (req, res, next) => {
   const { id } = req.params;
   try {
     const issues = await db.findByUserId(id);
@@ -40,6 +44,7 @@ router.post(
   validator("user_id"),
   validator("hazard_level"),
   restricted,
+  validateId,
   async (req, res, next) => {
     try {
       const newissue = await db.add(req.body);
@@ -50,10 +55,11 @@ router.post(
   }
 );
 
-router.get("/:issueId", restricted, validateIssueId, async (req, res, next) => {
+router.get("/:issue_id", restricted,
+validateId, validateIssueId, async (req, res, next) => {
   try {
-    const { issueId } = req.params;
-    const issue = await db.findById(issueId);
+    const { issue_id } = req.params;
+    const issue = await db.findById(issue_id);
     res.json(issue);
   } catch (err) {
     next(err);
@@ -61,14 +67,15 @@ router.get("/:issueId", restricted, validateIssueId, async (req, res, next) => {
 });
 
 router.put(
-  "/:issueId",
+  "/:issue_id",
   restricted,
+  validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {
     try {
-      const { issueId } = req.params;
-      const issue = await db.update(issueId, req.body);
+      const { issue_id } = req.params;
+      const issue = await db.update(issue_id, req.body);
       res.json(issue);
     } catch (err) {
       next(err);
@@ -77,14 +84,15 @@ router.put(
 );
 
 router.delete(
-  "/:issueId",
+  "/:issue_id",
   restricted,
+  validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {
     try {
-      const { issueId } = req.params;
-      const deletedCount = await db.remove(issueId);
+      const { issue_id } = req.params;
+      const deletedCount = await db.remove(issue_id);
 
       res.json({ removed: deletedCount });
     } catch (err) {
