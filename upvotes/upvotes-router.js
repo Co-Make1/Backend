@@ -9,14 +9,14 @@ const db = require("./upvotes-model");
 
 
 router.post("/", restricted, async (req, res, next) => {
-  const {issue_id} = Number(req.params)
+  const issue_id = Number(req.params.issue_id)
   const user_id = Number(req.params.id)
   const upvote = { upvotes: 1, issue_id, user_id };
   try {
     console.log(upvote);
-    // const newUpvote = await db.add(upvote);
-    console.log(`newUpvote: `, "newUpvote")
-    res.status(201).json("newUpvote");
+    const newUpvote = await db.add(upvote);
+    console.log(`newUpvote: `, newUpvote)
+    res.status(201).json(newUpvote);
   } catch (err) {
     next(err);
   }
