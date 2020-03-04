@@ -8,7 +8,8 @@ beforeEach(async () => {
     await db.seed.run
 })
 afterAll(async () => {
-  await db.destroy();
+  await db("users").truncate()
+  await db.seed.run
 });
 
 test("Test Route", async () => {

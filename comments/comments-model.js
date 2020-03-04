@@ -2,8 +2,8 @@ const db = require("../data/db-config");
 
 function find() {
   return db("comments as c")
+  .leftJoin("issues as i", "c.issue_id", "i.id")
     .leftJoin("users as u", "c.user_id", "u.id")
-    .leftJoin("issues as i", "c.issue_id", "i.id")
     .select(
       "c.id",
       "c.user_id",

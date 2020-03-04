@@ -49,7 +49,6 @@ router.post(
     try {
       let { body } = req
       body = {...body, user_id: Number(req.params.id)}
-      console.log(body)
       const newissue = await db.add(body);
       res.status(201).json(newissue);
     } catch (err) {

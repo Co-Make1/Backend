@@ -12,10 +12,10 @@ const db = require("./comments-model");
 
 router.get(
   "/allComments",
-  restricted,
-  validateId,
-  validateIssueId,
-  validateIssueId,
+  // restricted,
+  // validateId,
+  // validateIssueId,
+  // validateIssueId,
   async (req, res, next) => {
     try {
       const comments = await db.find();
@@ -29,8 +29,8 @@ router.get(
 router.get(
   "/",
   // restricted,
-  validateId,
-  validateIssueId,
+  // validateId,
+  // validateIssueId,
   async (req, res, next) => {
     const { issueId } = req.params;
     try {
@@ -50,7 +50,7 @@ router.post(
   validateIssueId,
   async (req, res, next) => {
     let { body } = req;
-    body = { ...body, issue_id: req.params.issueId, user_id: req.params.id };
+    body = { ...body, issue_id: req.params.issue_id, user_id: req.params.id };
     try {
       console.log(body);
       const newComment = await db.add(body);
