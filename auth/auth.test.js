@@ -7,7 +7,9 @@ beforeEach(async () => {
     await db.seed.run
     await db("users").truncate()
 })
-
+afterAll(async () => {
+  await db.destroy();
+});
 
     describe("LOGIN ROUTE", () => {
         test("login route", async () => {
