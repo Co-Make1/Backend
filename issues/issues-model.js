@@ -1,24 +1,9 @@
 const db = require("../data/db-config");
 
-function find() {
-  return db("issues as i")
-    .leftJoin("users as u", "i.user_id", "u.id")
-    .leftJoin("hazard_levels as h", "i.hazard_level", "h.id")
-    .select(
-      "i.id",
-      "i.issue",
-      "i.issue_description",
-      "i.photo",
-      "h.hazard_level",
-      "i.city",
-      "i.state",
-      "i.zip_code",
-      "i.upvotes",
-      "i.user_id",
-      "u.username",
-      "i.created_at"
-    )
-    .orderBy("i.upvotes", "desc");
+async function find() {
+  const issues = await db("issues")
+  const issuesArr = await issues.map(async issue => await findById(issue.id))
+  return Promise.all(issuesArr)
 }
 
 async function findBy(filter) {
@@ -35,8 +20,8 @@ async function add(issue) {
   return findById(id);
 }
 
-function findById(id) {
-  return db("issues as i")
+async function findById(id) {
+  const issue = await db("issues as i")
     .where("i.id", id)
     .leftJoin("users as u", "i.user_id", "u.id")
     .leftJoin("hazard_levels as h", "i.hazard_level", "h.id")
@@ -49,12 +34,29 @@ function findById(id) {
       "i.city",
       "i.state",
       "i.zip_code",
-      "i.upvotes",
       "i.user_id",
       "u.username",
       "i.created_at"
     )
-    .orderBy("i.upvotes", "desc");
+    const upvotesArr = await db("upvotes as up").where("up.issue_id", id).select("up.upvotes").orderBy("up.upvotes", "desc")
+    const total_upvotes = upvotesArr.length
+
+    const upvotes = await db("issues as i")
+    .where("i.id", id)
+    .leftJoin("upvotes as up", "up.issue_id", "i.id")
+    .leftJoin("users as u", "up.user_id", "u.id")
+    .select(
+      "up.id as upvote_id",
+      "up.user_id",
+      "u.username"
+    )
+    .orderBy("up.user_id", "asc");
+    if (!upvotes[0].user_id) {
+      return {issue, upvotes: "no upvotes yet yet"}
+    } else {
+      return {issue, total_upvotes, upvotes}
+    }
+    
 }
 
 function findByUserId(id) {

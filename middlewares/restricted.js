@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   if (token) {
     jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
       if (err) {
-        res.status(403).json({
+        return res.status(403).json({
           message: "You are not authorized",
           error: err.message
         });

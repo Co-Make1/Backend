@@ -4,7 +4,7 @@ module.exports = async (req, res, next) => {
   try {
     const issue = await issuesModel.findById(req.params.issueId);
     if (!issue) {
-      res
+      return res
         .status(404)
         .json({
           message: `No issue found with the id of ${req.params.issueId}`
