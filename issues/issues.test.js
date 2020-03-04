@@ -6,7 +6,6 @@ const db = require("../data/db-config")
 beforeEach(async () => {
   await db("users").truncate()
     await db.seed.run
-    await db("users").truncate()
 })
 
 afterAll(async () => {

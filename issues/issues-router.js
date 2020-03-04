@@ -41,13 +41,16 @@ router.post(
   validator("city"),
   validator("state"),
   validator("zip_code"),
-  validator("user_id"),
+  // validator("user_id"),
   validator("hazard_level"),
   restricted,
   validateId,
   async (req, res, next) => {
     try {
-      const newissue = await db.add(req.body);
+      let { body } = req
+      body = {...body, user_id: Number(req.params.id)}
+      console.log(body)
+      const newissue = await db.add(body);
       res.status(201).json(newissue);
     } catch (err) {
       next(err);
