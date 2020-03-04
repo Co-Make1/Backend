@@ -1,18 +1,20 @@
 const router = require("express").Router({
   mergeParams: true
 });
+const upvotesRouter = require("../upvotes/upvotes-router");
 const commentsRouter = require("../comments/comments-router");
 const restricted = require("../middlewares/restricted");
+const validateId = require("../middlewares/validateId")
 const validateIssueId = require("../middlewares/validateIssueId");
 const validateIssueEditingRights = require("../middlewares/validateIssueEditingRights");
 const validator = require("../middlewares/validator");
-const validateId = require("../middlewares/validateId");
 
 const db = require("./issues-model");
 
-router.use("/:issueId/comments", commentsRouter);
+router.use("/:issue_id/comments", commentsRouter);
+router.use("/:issue_id/upvotes", upvotesRouter);
 
-router.get("/", /*restricted,*/ validateId, async (req, res, next) => {
+router.get("/", restricted, validateId, async (req, res, next) => {
   try {
     const issues = await db.find();
     res.json(issues);
@@ -21,9 +23,10 @@ router.get("/", /*restricted,*/ validateId, async (req, res, next) => {
   }
 });
 
-router.get("/user", /*restricted,*/ async (req, res, next) => {
+router.get("/user", restricted,
+validateId, async (req, res, next) => {
+  const { id } = req.params;
   try {
-    const { id } = req.params;
     const issues = await db.findByUserId(id);
     res.json(issues);
   } catch (err) {
@@ -38,47 +41,41 @@ router.post(
   validator("city"),
   validator("state"),
   validator("zip_code"),
+  validator("user_id"),
   validator("hazard_level"),
-  /*restricted,*/
+  restricted,
   validateId,
   async (req, res, next) => {
     try {
-      let { body } = req;
-      body = { ...body, user_id: Number(req.params.id) };
-      const newIssue = await db.add(body);
-      res.status(201).json(newIssue);
+      const newissue = await db.add(req.body);
+      res.status(201).json(newissue);
     } catch (err) {
       next(err);
     }
   }
 );
 
-router.get(
-  "/:issueId",
-  /*restricted,*/
-  validateId,
-  validateIssueId,
-  async (req, res, next) => {
-    try {
-      const { issueId } = req.params;
-      const issue = await db.findById(issueId);
-      res.json(issue);
-    } catch (err) {
-      next(err);
-    }
+router.get("/:issue_id", restricted,
+validateId, validateIssueId, async (req, res, next) => {
+  try {
+    const { issue_id } = req.params;
+    const issue = await db.findById(issue_id);
+    res.json(issue);
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 router.put(
-  "/:issueId",
-  /*restricted,*/
+  "/:issue_id",
+  restricted,
   validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {
     try {
-      const { issueId } = req.params;
-      const issue = await db.update(issueId, req.body);
+      const { issue_id } = req.params;
+      const issue = await db.update(issue_id, req.body);
       res.json(issue);
     } catch (err) {
       next(err);
@@ -87,15 +84,15 @@ router.put(
 );
 
 router.delete(
-  "/:issueId",
-  /*restricted,*/
+  "/:issue_id",
+  restricted,
   validateId,
   validateIssueId,
   validateIssueEditingRights,
   async (req, res, next) => {
     try {
-      const { issueId } = req.params;
-      const deletedCount = await db.remove(issueId);
+      const { issue_id } = req.params;
+      const deletedCount = await db.remove(issue_id);
 
       res.json({ removed: deletedCount });
     } catch (err) {
