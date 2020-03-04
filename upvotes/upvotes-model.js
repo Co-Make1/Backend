@@ -2,7 +2,7 @@ const db = require("../data/db-config");
 
 function findById(id) {
   return db("upvotes")
-    .where({ id })
+    .where({ id }).first()
 ;
 }
 
@@ -15,13 +15,13 @@ function findBy(filter) {
 async function add(upvote) {
 
       const [id] = await db("upvotes").insert(upvote);
-      return {upvote_id: id}
+      return { upvote_id: id}
 
   }
 
 
 function remove(id) {
-  return db("comments")
+  return db("upvotes")
     .where({ id })
     .del();
 }
@@ -29,5 +29,6 @@ function remove(id) {
 module.exports = {
   add,
   remove,
-  findBy
+  findBy,
+  findById
 };

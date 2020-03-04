@@ -307,18 +307,30 @@ Returns newly created issue object
 
 ```json
 {
-  "id": 2,
-  "issue": "Newly Created Issue",
-  "issue_description": "I'm an issue description",
-  "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-  "hazard_level": "Low Hazard",
-  "city": "Chicago",
-  "state": "Illinois",
-  "zip_code": 60619,
-  "upvotes": 3,
-  "user_id": 1,
-  "username": "testUser",
-  "created_at": "2020-02-28 02:33:46"
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
 }
 ```
 
@@ -338,18 +350,30 @@ Returns updated issue object
 
 ```json
 {
-  "id": 4,
-  "issue": "I whine too much",
-  "issue_description": "Actually, I'm not sure if it's the dog, or the neighbor, but either way, it needs to stop!",
-  "photo": null,
-  "hazard_level": "Moderate Hazard",
-  "city": "Chicago",
-  "state": "Illinois",
-  "zip_code": 60610,
-  "upvotes": null,
-  "user_id": 2,
-  "username": "testAdmin",
-  "created_at": "2020-02-27 06:21:15"
+    "issue": {
+        "id": 1,
+        "issue": "pothole UPDATED",
+        "issue_description": "I'm an UPDATED issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
 }
 ```
 
@@ -375,7 +399,7 @@ Returns the number of records deleted
 
 # Post Upvote
 
-/api/users/1/issues/2/upvotes
+/api/users/<user.id>/issues/<issue.id>/upvotes
 
 Must be logged in
 
@@ -384,7 +408,44 @@ Required:
 - a valid user id
 - a valid issue id
 
-on Success
+On Success returns a 201 status and:
+```json
+  {
+      "upvote_id": 4
+  }
+```
+
+On Failure returns a 400 and:
+```json
+  {
+      "message": "User with the id of 1 has already upvoted issue with id of 2"
+  }
+```
+
+# Delete Upvote
+
+/api/users/<user.id>/issues/<issue.id>/upvotes/<upvote_id>
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+
+On Success returns a 200 status and:
+```json
+  {
+    "removed": 1
+  }
+```
+
+On Failure returns a 400 and:
+```json
+  {
+      "message": "User with the id of 1 has already upvoted issue with id of 2"
+  }
+```
 
 # GET Get All Comments For A Given Issue
 
