@@ -9,7 +9,7 @@ const db = require("./upvotes-model");
 
 
 router.post("/", restricted, async (req, res, next) => {
-  
+
   try {
 
     const issue_id = Number(req.params.issue_id)
@@ -19,7 +19,7 @@ router.post("/", restricted, async (req, res, next) => {
     const valCheck = validator.filter(issue => issue.issue_id === upvote.issue_id && issue)
     
     if (valCheck.length > 0) {
-      res.status(400).json({message:`User with the id of ${upvote.user_id} has already upvoted issue with id of ${upvote.issue_id}` })
+      return res.status(400).json({message:`User with the id of ${upvote.user_id} has already upvoted issue with id of ${upvote.issue_id}` })
     }
       const newUpvote = await db.add(upvote);
       res.status(201).json(newUpvote);
