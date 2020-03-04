@@ -14,7 +14,7 @@ const db = require("./issues-model");
 router.use("/:issue_id/comments", commentsRouter);
 router.use("/:issue_id/upvotes", upvotesRouter);
 
-router.get("/", restricted, validateId, async (req, res, next) => {
+router.get("/", /*restricted,*/ validateId, async (req, res, next) => {
   try {
     const issues = await db.find();
     res.json(issues);
@@ -23,7 +23,7 @@ router.get("/", restricted, validateId, async (req, res, next) => {
   }
 });
 
-router.get("/user", restricted,
+router.get("/user", /*restricted,*/
 validateId, async (req, res, next) => {
   const { id } = req.params;
   try {
@@ -43,7 +43,7 @@ router.post(
   validator("zip_code"),
   // validator("user_id"),
   validator("hazard_level"),
-  restricted,
+  /*restricted,*/
   validateId,
   async (req, res, next) => {
     try {
@@ -58,7 +58,7 @@ router.post(
   }
 );
 
-router.get("/:issue_id", restricted,
+router.get("/:issue_id", /*restricted,*/
 validateId, validateIssueId, async (req, res, next) => {
   try {
     const { issue_id } = req.params;
@@ -71,7 +71,7 @@ validateId, validateIssueId, async (req, res, next) => {
 
 router.put(
   "/:issue_id",
-  restricted,
+  /*restricted,*/
   validateId,
   validateIssueId,
   validateIssueEditingRights,
@@ -88,7 +88,7 @@ router.put(
 
 router.delete(
   "/:issue_id",
-  restricted,
+  /*restricted,*/
   validateId,
   validateIssueId,
   validateIssueEditingRights,
