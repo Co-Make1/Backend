@@ -178,7 +178,7 @@ const user ={
 
       expect(updated.status).toBe(200)
       expect(updated.type).toBe("application/json")
-      expect(updated.body).toEqualw({ removed: 1})
+      expect(updated.body).toEqual({ removed: 1})
 
       });
 
