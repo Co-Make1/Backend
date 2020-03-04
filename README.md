@@ -373,6 +373,19 @@ Returns the number of records deleted
 }
 ```
 
+# Post Upvote
+
+/api/users/1/issues/2/upvotes
+
+Must be logged in
+
+Required:
+
+- a valid user id
+- a valid issue id
+
+on Success
+
 # GET Get All Comments For A Given Issue
 
 /api/users/<user.id>/issues/<issue.id>/comments
