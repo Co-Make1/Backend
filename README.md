@@ -231,29 +231,57 @@ Returns an array of all issue objects posted by given user
 ```json
 [
   {
-    "id": 1,
-    "issue": "pothole",
-    "issue_description": "I'm an issue description",
-    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-    "hazard_level": "Severe Hazard",
-    "zip_code": 60649,
-    "upvotes": 364235,
-    "user_id": 1,
-    "username": "testUser",
-    "created_at": "2020-02-28 02:33:46"
-  },
-  {
-    "id": 2,
-    "issue": "car crash",
-    "issue_description": "I'm an issue description",
-    "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-    "hazard_level": "Low Hazard",
-    "zip_code": 60619,
-    "upvotes": 3,
-    "user_id": 1,
-    "username": "testUser",
-    "created_at": "2020-02-28 02:33:46"
-  }
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+},
+{
+    "issue": {
+        "id": 2,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
+}
 ]
 ```
 
@@ -272,18 +300,30 @@ Returns issue object with specified id
 
 ```json
 {
-  "id": 2,
-  "issue": "car crash",
-  "issue_description": "I'm an issue description",
-  "photo": "https://images.unsplash.com/photo-1543393716-375f47996a77?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-  "hazard_level": "Low Hazard",
-  "city": "Chicago",
-  "state": "Illinois",
-  "zip_code": 60619,
-  "upvotes": 3,
-  "user_id": 1,
-  "username": "testUser",
-  "created_at": "2020-02-28 02:33:46"
+    "issue": {
+        "id": 1,
+        "issue": "pothole",
+        "issue_description": "I'm an issue description",
+        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+        "hazard_level": "Severe Hazard",
+        "city": "Chicago",
+        "state": "Illinois",
+        "zip_code": 60649,
+        "user_id": 1,
+        "username": "testUser",
+        "created_at": "2020-03-03 03:15:51"
+    },
+    "total_upvotes": 2,
+    "upvoted_by": [
+        {
+            "user_id": 1,
+            "username": "testUser"
+        },
+        {
+            "user_id": 2,
+            "username": "testAdmin"
+        }
+    ]
 }
 ```
 
