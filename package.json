@@ -6,7 +6,7 @@
   "scripts": {
     "server": "cross-env NODE_ENV=dev nodemon jest index.js",
     "start": "node index.js",
-    "test": "cross-env DB_ENV=testing jest --verbose --watchAll"
+    "test": "cross-env DB_ENV=testing jest --verbose --watchAll --runInBand"
   },
   "jest": {
     "testingEnvironment": "node"
