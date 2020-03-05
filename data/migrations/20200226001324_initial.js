@@ -30,7 +30,7 @@ exports.up = async function(knex) {
     issues.string("issue_description").notNullable();
     issues.string("photo").unique();
     issues.string("city").notNullable();
-    issues.string("state").notNullable();
+    issues.string("state", 2).notNullable();
     issues.integer("zip_code").notNullable();
     issues
       .integer("user_id")

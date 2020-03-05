@@ -11,7 +11,7 @@ exports.seed = async function(knex) {
       first_name: "First Name (test - user)",
       last_name: "Last Name (test - user)",
       city: "Chicago",
-      state: "Illinois",
+      state: "IL",
       zip_code: 60626,
       is_admin: false
     },
@@ -23,7 +23,7 @@ exports.seed = async function(knex) {
       first_name: "First Name (test - admin)",
       last_name: "Last Name (test - admin)",
       city: "Chicago",
-      state: "Illinois",
+      state: "IL",
       zip_code: 60619,
       is_admin: true
     }
