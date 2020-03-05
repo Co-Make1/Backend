@@ -52,7 +52,7 @@ async function findById(id) {
     )
     .orderBy("up.user_id", "asc");
     if (!upvotes[0].user_id) {
-      return {issue, upvotes: "no upvotes yet yet"}
+      return {issue, upvotes: []}
     } else {
       return {issue, total_upvotes, upvotes}
     }
@@ -91,7 +91,7 @@ async function findByUserId(id) {
     )
     .orderBy("up.user_id", "asc");
     if (!upvotes[0].user_id) {
-      return {issue, upvotes: "no upvotes yet yet"}
+      return {issue, upvotes: []}
     } else {
       return {issue, total_upvotes, upvotes}
     }
