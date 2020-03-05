@@ -341,7 +341,11 @@ Must provide:
 - city
 - state
 - zip_code
-- hazard_level ( 1: Severe Hazard, 2: Moderate Hazard, 3: Low Hazard )
+- hazard_level 
+    Must submit as a number where: 
+    - 1 is Severe Hazard
+    - 2 is Moderate Hazard 
+    - 3 is Low Hazard
 
 Returns newly created issue object
 
