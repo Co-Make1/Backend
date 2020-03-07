@@ -1,139 +1,154 @@
-const supertest = require("supertest")
-const server = require("../index")
-const db = require("../data/db-config")
+const supertest = require("supertest");
+const server = require("../index");
+const db = require("../data/db-config");
 
-
-beforeEach(async () => {
-  await db("users").truncate()
-  await db("issues").truncate()
-  await db.seed.run
-})
-
-afterAll(async () => { 
-  await db.seed.run
-  await db.destroy()
-});
+// afterAll(async () => {
+//   await db.seed.run;
+//   await db.destroy();
+// });
 
 test("Test Route", async () => {
-  const res = await supertest(server).get("/")
-  expect(res.status).toBe(200)
+  const res = await supertest(server).get("/");
+  expect(res.status).toBe(200);
   expect(res.type).toBe("text/html");
-  expect(res.text).toBe("<h3>Co-make API is live!</h3>")
-  })
+  expect(res.text).toBe("<h3>Co-make API is live!</h3>");
+});
 
+beforeEach(async () => {
+  await supertest(server)
+    .post("/api/auth/register")
+    .send(user);
+
+  const res = await supertest(server)
+    .post("/api/auth/login")
+    .send({ username: "User1", password: "password" });
+  expect(res.status).toBe(200);
+  expect(res.type).toBe("application/json");
+  expect(res.body.user.username).toBe("User1");
+});
 //$$$$$$$$$$$$$$$$$ THESE TESTS WORK $$$$$$$$$$$$$$$$$$$$$$$
-//   const testIssue = {
-  
-//     issue: "Newly Created Issue",
-//     issue_description: "I'm an issue description",
-//     hazard_level: 2,
-//     city: "Chicago",
-//     state: "Illinois",
-//     zip_code: 60619
-  
-// }
+const testIssue = {
+  issue: "Newly Created Issue",
+  issue_description: "I'm an issue description",
+  hazard_level: 2,
+  city: "Chicago",
+  state: "Illinois",
+  zip_code: 60619
+};
 
-// const user ={ 
-//   username: "User1", 
-//   password: "password",
-//   email: "user11@test.com",
-//   first_name: "User1",
-//   last_name: "Test",
-//   city: "Userapolis",
-//   state: "User1",
-//   zip_code: 61401,
-//   is_admin: 0
-// }
+const testIssue2 = {
+  issue: "Newly Created Issue - 2",
+  issue_description: "I'm an issue description",
+  hazard_level: 2,
+  city: "Chicago",
+  state: "Illinois",
+  zip_code: 60619
+};
 
-//     describe("Issues Tests",  () => {
+const user = {
+  username: "User1",
+  password: "password",
+  email: "user11@test.com",
+  first_name: "User1",
+  last_name: "Test",
+  city: "Userapolis",
+  state: "User1",
+  zip_code: 61401,
+  is_admin: 0
+};
 
-//       test("get all issues", async () => {
-//         await supertest(server)
-//         .post("/api/auth/register")
-//         .send(user);
+describe("Issues Tests", () => {
+  test("get all issues", async () => {
+    await supertest(server)
+      .post("/api/auth/register")
+      .send(user);
 
-//           const res = await supertest(server)
-//             .post("/api/auth/login")
-//             .send({ username: "User1", password: "password" });
-//           expect(res.status).toBe(200);
-//           expect(res.type).toBe("application/json");
-//           expect(res.body.user.username).toBe("User1");
+    const res = await supertest(server)
+      .post("/api/auth/login")
+      .send({ username: "User1", password: "password" });
+    expect(res.status).toBe(200);
+    expect(res.type).toBe("application/json");
+    expect(res.body.user.username).toBe("User1");
 
+    await supertest(server)
+      .post(`/api/users/${res.body.user.id}/issues`)
+      .send(testIssue);
 
-//         const issues = await supertest(server)
-//         .get("/api/users/1/issues")
-//       expect(issues.status).toBe(200);
-//       expect(issues.type).toBe("application/json");
-//       // expect(issues).toBe(issues[0]);
-//       });
-  
+    await supertest(server)
+      .post(`/api/users/${res.body.user.id}/issues`)
+      .send(testIssue2);
 
+    const issues = await supertest(server).get("/api/users/1/issues");
+    expect(issues.status).toBe(200);
+    expect(issues.type).toBe("application/json");
+    expect(JSON.parse(issues.text)[1].issue.issue).toBe(
+      "Newly Created Issue - 2"
+    );
+  });
 
-//       test("post a new issue", async () => {
-//       await supertest(server)
-//             .post("/api/auth/register")
-//             .send(user);
+  test("post a new issue", async () => {
+    await supertest(server)
+      .post("/api/auth/register")
+      .send(user);
 
-//           const res = await supertest(server)
-//             .post("/api/auth/login")
-//             .send({ username: "User1", password: "password" });
+    const res = await supertest(server)
+      .post("/api/auth/login")
+      .send({ username: "User1", password: "password" });
 
-//         const postIssue = await supertest(server)
-//         .post(`/api/users/${res.body.user.id}/issues`)
-//         .send(testIssue)
-//         expect(postIssue.status).toBe(201);
-//         expect(postIssue.type).toBe("application/json");
-//         expect(postIssue.body.issue.issue).toBe("Newly Created Issue");
-//        })
+    const postIssue = await supertest(server)
+      .post(`/api/users/${res.body.user.id}/issues`)
+      .send(testIssue);
 
-//       //  test("Update an issue", async () => {
-//       //   await supertest(server)
-//       //       .post("/api/auth/register")
-//       //       .send(user);
+    expect(postIssue.status).toBe(201);
+    expect(postIssue.type).toBe("application/json");
+    expect(postIssue.body.issue.issue).toBe("Newly Created Issue");
+  });
 
-//       //     const res = await supertest(server)
-//       //       .post("/api/auth/login")
-//       //       .send({ username: "User1", password: "password" });
-//       //     expect(res.status).toBe(200);
-//       //     expect(res.type).toBe("application/json");
-//       //     expect(res.body.user.username).toBe("User1");
+  test("Update an issue", async () => {
+    await supertest(server)
+      .post("/api/auth/register")
+      .send(user);
 
-//       //     const postIssue = await supertest(server)
-//       //     .post(`/api/users/${res.body.user.id}/issues`)
-//       //     .send(testIssue)
+    const res = await supertest(server)
+      .post("/api/auth/login")
+      .send({ username: "User1", password: "password" });
+    expect(res.status).toBe(200);
+    expect(res.type).toBe("application/json");
+    expect(res.body.user.username).toBe("User1");
 
-//       //   const update = await supertest(server)
-//       //   .put(`/api/users/1/issues/${postIssue.body.issue.id}`)
-//       //   .send({...testIssue ,issue_description : "New Issue description"})
-//       //   expect(200).toBe(200);
-//       //   expect(update.type).toBe("application/json");
-//       //   expect(update.body.issue.issue_description).toBe("New Issue description");
-//       //  })
+    const postIssue = await supertest(server)
+      .post(`/api/users/${res.body.user.id}/issues`)
+      .send(testIssue);
 
-//       //  test("Delete an issue", async () => {
-//       //   const regRes = await supertest(server)
-//       //       .post("/api/auth/register")
-//       //       .send(user);
+    const update = await supertest(server)
+      .put(`/api/users/1/issues/${postIssue.body.issue.id}`)
+      .send({ ...testIssue, issue_description: "New Issue description" });
+    expect(200).toBe(200);
+    expect(update.type).toBe("application/json");
+    expect(update.body.issue.issue_description).toBe("New Issue description");
+  });
 
+  test("Delete an issue", async () => {
+    const regRes = await supertest(server)
+      .post("/api/auth/register")
+      .send(user);
 
+    const res = await supertest(server)
+      .post("/api/auth/login")
+      .send({ username: "User1", password: "password" });
+    expect(res.status).toBe(200);
+    expect(res.type).toBe("application/json");
+    expect(res.body.user.username).toBe("User1");
 
-//       //     const res = await supertest(server)
-//       //       .post("/api/auth/login")
-//       //       .send({ username: "User1", password: "password" });
-//       //     expect(res.status).toBe(200);
-//       //     expect(res.type).toBe("application/json");
-//       //     expect(res.body.user.username).toBe("User1");
+    const postIssue = await supertest(server)
+      .post(`/api/users/${res.body.user.id}/issues`)
+      .send(testIssue);
 
-//       //     const postIssue = await supertest(server)
-//       //     .post(`/api/users/${res.body.user.id}/issues`)
-//       //     .send(testIssue)
-
-//       //   const deleteIssue = await supertest(server)
-//       //   .delete(`/api/users/${res.body.user.id}/issues/1`)
-//       //   expect(deleteIssue.status).toBe(200);
-//       //   expect(deleteIssue.type).toBe("application/json");
-//       //   expect(deleteIssue.body).toEqual({removed: 1});
-//       //  })
-
-//       });
-
+    const deleteIssue = await supertest(server).delete(
+      `/api/users/${res.body.user.id}/issues/1`
+    );
+    expect(deleteIssue.status).toBe(200);
+    expect(deleteIssue.type).toBe("application/json");
+    expect(deleteIssue.body).toEqual({ removed: 1 });
+  });
+});
