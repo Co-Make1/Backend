@@ -1,9 +1,9 @@
 const db = require("../data/db-config");
 
 async function find() {
-  const issues = await db("issues")
-  const issuesArr = await issues.map(async issue => await findById(issue.id))
-  return Promise.all(issuesArr)
+  const issues = await db("issues");
+  const issuesArr = await issues.map(async issue => await findById(issue.id));
+  return Promise.all(issuesArr);
 }
 
 async function findBy(filter) {
@@ -37,26 +37,24 @@ async function findById(id) {
       "i.user_id",
       "u.username",
       "i.created_at"
-    )
-    const upvotesArr = await db("upvotes as up").where("up.issue_id", id).select("up.upvotes").orderBy("up.upvotes", "desc")
-    const total_upvotes = upvotesArr.length
+    );
+  const upvotesArr = await db("upvotes as up")
+    .where("up.issue_id", id)
+    .select("up.upvotes")
+    .orderBy("up.upvotes", "desc");
+  const total_upvotes = upvotesArr.length;
 
-    const upvotes = await db("issues as i")
+  const upvotes = await db("issues as i")
     .where("i.id", id)
     .leftJoin("upvotes as up", "up.issue_id", "i.id")
     .leftJoin("users as u", "up.user_id", "u.id")
-    .select(
-      "up.id as upvote_id",
-      "up.user_id",
-      "u.username"
-    )
+    .select("up.id as upvote_id", "up.user_id", "u.username")
     .orderBy("up.user_id", "asc");
-    if (!upvotes[0].user_id) {
-      return {issue, upvotes: []}
-    } else {
-      return {issue, total_upvotes, upvotes}
-    }
-    
+  if (!upvotes[0].user_id) {
+    return { issue, total_upvotes: 0, upvotes: [] };
+  } else {
+    return { issue, total_upvotes, upvotes };
+  }
 }
 
 async function findByUserId(id) {
@@ -76,25 +74,24 @@ async function findByUserId(id) {
       "i.user_id",
       "u.username",
       "i.created_at"
-    )
-    const upvotesArr = await db("upvotes as up").where("up.issue_id", id).select("up.upvotes").orderBy("up.upvotes", "desc")
-    const total_upvotes = upvotesArr.length
+    );
+  const upvotesArr = await db("upvotes as up")
+    .where("up.issue_id", id)
+    .select("up.upvotes")
+    .orderBy("up.upvotes", "desc");
+  const total_upvotes = upvotesArr.length;
 
-    const upvotes = await db("issues as i")
+  const upvotes = await db("issues as i")
     .where("i.id", id)
     .leftJoin("upvotes as up", "up.issue_id", "i.id")
     .leftJoin("users as u", "up.user_id", "u.id")
-    .select(
-      "up.id as upvote_id",
-      "up.user_id",
-      "u.username"
-    )
+    .select("up.id as upvote_id", "up.user_id", "u.username")
     .orderBy("up.user_id", "asc");
-    if (!upvotes[0].user_id) {
-      return {issue, upvotes: []}
-    } else {
-      return {issue, total_upvotes, upvotes}
-    }
+  if (!upvotes[0].user_id) {
+    return { issue, upvotes: [] };
+  } else {
+    return { issue, total_upvotes, upvotes };
+  }
 }
 
 async function update(id, body) {
