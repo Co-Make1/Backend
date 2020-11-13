@@ -6,8 +6,18 @@ Api for Co-Make - the app that lets us make things better
 
 # GET Test
 
-https://co-make-backend.herokuapp.com/
-Is the server live?
+Deployment:<br>
+[https://co-make-backend.herokuapp.com/]("https://co-make-backend.herokuapp.com/")
+<br/>
+
+See what the front end team did with this API at:
+<br>[https://react-co-make.now.sh/]("https://react-co-make.now.sh/")
+
+<br>Don't want to make an account? You can always log in with these super secure credentials:
+
+- username: testUser,<br> password: password
+  <br>or
+- username: testAdmin,<br> password: password
 
 # POST Register A New User
 
@@ -232,56 +242,56 @@ Returns an array of all issue objects posted by given user
 [
   {
     "issue": {
-        "id": 1,
-        "issue": "pothole",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "city": "Chicago",
-        "state": "Illinois",
-        "zip_code": 60649,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-03-03 03:15:51"
+      "id": 1,
+      "issue": "pothole",
+      "issue_description": "I'm an issue description",
+      "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+      "hazard_level": "Severe Hazard",
+      "city": "Chicago",
+      "state": "Illinois",
+      "zip_code": 60649,
+      "user_id": 1,
+      "username": "testUser",
+      "created_at": "2020-03-03 03:15:51"
     },
     "total_upvotes": 2,
     "upvoted_by": [
-        {
-            "user_id": 1,
-            "username": "testUser"
-        },
-        {
-            "user_id": 2,
-            "username": "testAdmin"
-        }
+      {
+        "user_id": 1,
+        "username": "testUser"
+      },
+      {
+        "user_id": 2,
+        "username": "testAdmin"
+      }
     ]
-},
-{
+  },
+  {
     "issue": {
-        "id": 2,
-        "issue": "pothole",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "city": "Chicago",
-        "state": "Illinois",
-        "zip_code": 60649,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-03-03 03:15:51"
+      "id": 2,
+      "issue": "pothole",
+      "issue_description": "I'm an issue description",
+      "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+      "hazard_level": "Severe Hazard",
+      "city": "Chicago",
+      "state": "Illinois",
+      "zip_code": 60649,
+      "user_id": 1,
+      "username": "testUser",
+      "created_at": "2020-03-03 03:15:51"
     },
     "total_upvotes": 2,
     "upvoted_by": [
-        {
-            "user_id": 1,
-            "username": "testUser"
-        },
-        {
-            "user_id": 2,
-            "username": "testAdmin"
-        }
+      {
+        "user_id": 1,
+        "username": "testUser"
+      },
+      {
+        "user_id": 2,
+        "username": "testAdmin"
+      }
     ]
-}
+  }
 ]
 ```
 
@@ -300,30 +310,30 @@ Returns issue object with specified id
 
 ```json
 {
-    "issue": {
-        "id": 1,
-        "issue": "pothole",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "city": "Chicago",
-        "state": "Illinois",
-        "zip_code": 60649,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-03-03 03:15:51"
+  "issue": {
+    "id": 1,
+    "issue": "pothole",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60649,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-03-03 03:15:51"
+  },
+  "total_upvotes": 2,
+  "upvoted_by": [
+    {
+      "user_id": 1,
+      "username": "testUser"
     },
-    "total_upvotes": 2,
-    "upvoted_by": [
-        {
-            "user_id": 1,
-            "username": "testUser"
-        },
-        {
-            "user_id": 2,
-            "username": "testAdmin"
-        }
-    ]
+    {
+      "user_id": 2,
+      "username": "testAdmin"
+    }
+  ]
 }
 ```
 
@@ -341,40 +351,40 @@ Must provide:
 - city
 - state
 - zip_code
-- hazard_level 
-    Must submit as a number where: 
-    - 1 is Severe Hazard
-    - 2 is Moderate Hazard 
-    - 3 is Low Hazard
+- hazard_level
+  Must submit as a number where:
+  - 1 is Severe Hazard
+  - 2 is Moderate Hazard
+  - 3 is Low Hazard
 
 Returns newly created issue object
 
 ```json
 {
-    "issue": {
-        "id": 1,
-        "issue": "pothole",
-        "issue_description": "I'm an issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "city": "Chicago",
-        "state": "Illinois",
-        "zip_code": 60649,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-03-03 03:15:51"
+  "issue": {
+    "id": 1,
+    "issue": "pothole",
+    "issue_description": "I'm an issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60649,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-03-03 03:15:51"
+  },
+  "total_upvotes": 2,
+  "upvoted_by": [
+    {
+      "user_id": 1,
+      "username": "testUser"
     },
-    "total_upvotes": 2,
-    "upvoted_by": [
-        {
-            "user_id": 1,
-            "username": "testUser"
-        },
-        {
-            "user_id": 2,
-            "username": "testAdmin"
-        }
-    ]
+    {
+      "user_id": 2,
+      "username": "testAdmin"
+    }
+  ]
 }
 ```
 
@@ -394,30 +404,30 @@ Returns updated issue object
 
 ```json
 {
-    "issue": {
-        "id": 1,
-        "issue": "pothole UPDATED",
-        "issue_description": "I'm an UPDATED issue description",
-        "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
-        "hazard_level": "Severe Hazard",
-        "city": "Chicago",
-        "state": "Illinois",
-        "zip_code": 60649,
-        "user_id": 1,
-        "username": "testUser",
-        "created_at": "2020-03-03 03:15:51"
+  "issue": {
+    "id": 1,
+    "issue": "pothole UPDATED",
+    "issue_description": "I'm an UPDATED issue description",
+    "photo": "https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60",
+    "hazard_level": "Severe Hazard",
+    "city": "Chicago",
+    "state": "Illinois",
+    "zip_code": 60649,
+    "user_id": 1,
+    "username": "testUser",
+    "created_at": "2020-03-03 03:15:51"
+  },
+  "total_upvotes": 2,
+  "upvoted_by": [
+    {
+      "user_id": 1,
+      "username": "testUser"
     },
-    "total_upvotes": 2,
-    "upvoted_by": [
-        {
-            "user_id": 1,
-            "username": "testUser"
-        },
-        {
-            "user_id": 2,
-            "username": "testAdmin"
-        }
-    ]
+    {
+      "user_id": 2,
+      "username": "testAdmin"
+    }
+  ]
 }
 ```
 
@@ -453,17 +463,19 @@ Required:
 - a valid issue id
 
 On Success returns a 201 status and:
+
 ```json
-  {
-      "upvote_id": 4
-  }
+{
+  "upvote_id": 4
+}
 ```
 
 On Failure returns a 400 and:
+
 ```json
-  {
-      "message": "User with the id of 1 has already upvoted issue with id of 2"
-  }
+{
+  "message": "User with the id of 1 has already upvoted issue with id of 2"
+}
 ```
 
 # Delete Upvote
@@ -478,17 +490,19 @@ Required:
 - a valid issue id
 
 On Success returns a 200 status and:
+
 ```json
-  {
-    "removed": 1
-  }
+{
+  "removed": 1
+}
 ```
 
 On Failure returns a 400 and:
+
 ```json
-  {
-      "message": "User with the id of 1 has already upvoted issue with id of 2"
-  }
+{
+  "message": "User with the id of 1 has already upvoted issue with id of 2"
+}
 ```
 
 # GET Get All Comments For A Given Issue
